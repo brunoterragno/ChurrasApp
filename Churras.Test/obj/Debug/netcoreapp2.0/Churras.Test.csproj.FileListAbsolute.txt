@@ -1,0 +1,13 @@
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/xunit.runner.visualstudio.dotnetcore.testadapter.dll
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/xunit.runner.utility.netstandard15.dll
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/xunit.runner.reporters.netstandard15.dll
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/Churras.Test.deps.json
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/Churras.Test.runtimeconfig.json
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/Churras.Test.runtimeconfig.dev.json
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/Churras.Test.dll
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/Churras.Test.pdb
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/obj/Debug/netcoreapp2.0/Churras.Test.csproj.CoreCompileInputs.cache
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/obj/Debug/netcoreapp2.0/Churras.Test.AssemblyInfoInputs.cache
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/obj/Debug/netcoreapp2.0/Churras.Test.AssemblyInfo.cs
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/obj/Debug/netcoreapp2.0/Churras.Test.dll
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/obj/Debug/netcoreapp2.0/Churras.Test.pdb
