@@ -45,6 +45,17 @@ namespace Churras.Test.Integration
       Assert.Equal(expectedBarbecue.TotalParticipants, actualBarbecue.TotalParticipants);
       Assert.Equal(expectedBarbecue.TotalParticipantsWhoDontDrink, actualBarbecue.TotalParticipantsWhoDontDrink);
       Assert.Equal(expectedBarbecue.TotalParticipantsWhoDrink, actualBarbecue.TotalParticipantsWhoDrink);
+
+      // in case of any property was missed
+      AssertAllObject(expectedBarbecue, actualBarbecue);
+    }
+
+    private void AssertAllObject(Barbecue expectedBarbecue, Barbecue actualBarbecue)
+    {
+      Assert.Equal(
+        JsonConvert.SerializeObject(expectedBarbecue),
+        JsonConvert.SerializeObject(actualBarbecue)
+      );
     }
 
     [Fact]
