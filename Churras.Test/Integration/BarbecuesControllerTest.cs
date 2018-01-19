@@ -46,7 +46,7 @@ namespace Churras.Test.Integration
       var expectedBarbecues = GetAllDefaultBarbecues();
 
       // Act
-      var response = await RequestGet<List<Barbecue>>(server, BARBECUES);
+      var response = await RequestGet<List<Barbecue>>(client, BARBECUES);
 
       // Assert
       Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -61,7 +61,7 @@ namespace Churras.Test.Integration
       var expectedBarbecue = GetDefaultBarbecue();
 
       // Act
-      var response = await RequestGet<Barbecue>(server, $"{BARBECUES}/1");
+      var response = await RequestGet<Barbecue>(client, $"{BARBECUES}/1");
 
       // Assert
       Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -75,10 +75,24 @@ namespace Churras.Test.Integration
       var expectedBarbecue = GetDefaultBarbecue();
 
       // Act
-      var response = await RequestGet<Barbecue>(server, $"{BARBECUES}/99");
+      var response = await RequestGet<Barbecue>(client, $"{BARBECUES}/99");
 
       // Assert
       Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Create_New_Barbecue()
+    {
+      // Arrange
+      var newBarbecue = GetDefaultBarbecue();
+      var expectedStatusCode = HttpStatusCode.Created;
+
+      // Act
+      var response = await RequestPost<Barbecue>(client, BARBECUES, newBarbecue);
+
+      // Assert
+      Assert.Equal(expectedStatusCode, response.StatusCode);
     }
   }
 }
