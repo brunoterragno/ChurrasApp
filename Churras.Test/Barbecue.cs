@@ -33,6 +33,9 @@ namespace Churras.Test
       if (newParticipant.IsGoingToDrink && newParticipant.Dough < CostWithDrink)
         throw new ArgumentException("Should give more money");
 
+      if (newParticipant.IsGoingToDrink == false && newParticipant.Dough < CostWithoutDrink)
+        throw new ArgumentException("Should give more money");
+
       this.Participants.Add(newParticipant);
     }
 
