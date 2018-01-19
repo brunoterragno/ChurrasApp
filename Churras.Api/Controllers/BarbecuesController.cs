@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Churras.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Churras.Api.Controllers
@@ -9,29 +10,56 @@ namespace Churras.Api.Controllers
     [Route("api/[controller]")]
     public class BarbecuesController : Controller
     {
-        // GET api/values
+        // GET api/barbecues
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(new List<Barbecue>()
+            {
+                new Barbecue(
+                        title: "Churras Carnaval 1",
+                        date : DateTime.Now.AddDays(1).Date,
+                        description: "Vamos comemorar todos juntos nessa folia de sexta-feira 1!",
+                        costWithDrink : 20,
+                        costWithoutDrink : 10
+                    ),
+                    new Barbecue(
+                        title: "Churras Carnaval 2",
+                        date : DateTime.Now.AddDays(2).Date,
+                        description: "Vamos comemorar todos juntos nessa folia de sexta-feira 2!",
+                        costWithDrink : 30,
+                        costWithoutDrink : 20
+                    ),
+            });
         }
 
-        // GET api/values/5
+        // GET api/barbecues/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            if (id == 99)
+            {
+                return NotFound();
+            }
+
+            return Ok(new Barbecue(
+                title: "Churras Carnaval",
+                date : DateTime.Now.AddDays(1).Date,
+                description: "Vamos comemorar todos juntos nessa folia de sexta-feira!",
+                costWithDrink : 20,
+                costWithoutDrink : 10
+            ));
         }
 
-        // POST api/values
+        // POST api/barbecues
         [HttpPost]
         public void Post([FromBody] string value) { }
 
-        // PUT api/values/5
+        // PUT api/barbecues/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value) { }
 
-        // DELETE api/values/5
+        // DELETE api/barbecues/5
         [HttpDelete("{id}")]
         public void Delete(int id) { }
     }

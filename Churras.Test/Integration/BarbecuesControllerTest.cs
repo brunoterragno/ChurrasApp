@@ -8,6 +8,7 @@ using Churras.Api.Models;
 using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
 using Xunit;
+using static Churras.Test.RequestUtils;
 
 namespace Churras.Test.Integration
 {
@@ -24,12 +25,26 @@ namespace Churras.Test.Integration
       client = server.CreateClient();
     }
 
-    private async Task<RequestResult<T>> RequestGet<T>(string path)
+    private void AssertProperties(List<Barbecue> expectedBarbecues, List<Barbecue> actualBarbecues)
     {
-      var response = await server.CreateRequest(path).GetAsync();
-      var content = await response.Content.ReadAsStringAsync();
+      for (int i = 0; i < actualBarbecues.Count; i++)
+      {
+        AssertProperties(expectedBarbecues[i], actualBarbecues[i]);
+      }
+    }
 
-      return new RequestResult<T>(response.StatusCode, JsonConvert.DeserializeObject<T>(content));
+    private void AssertProperties(Barbecue expectedBarbecue, Barbecue actualBarbecue)
+    {
+      Assert.Equal(expectedBarbecue.CostWithDrink, actualBarbecue.CostWithDrink);
+      Assert.Equal(expectedBarbecue.CostWithoutDrink, actualBarbecue.CostWithoutDrink);
+      Assert.Equal(expectedBarbecue.Date, actualBarbecue.Date);
+      Assert.Equal(expectedBarbecue.Description, actualBarbecue.Description);
+      Assert.Equal(expectedBarbecue.Participants, actualBarbecue.Participants);
+      Assert.Equal(expectedBarbecue.Title, actualBarbecue.Title);
+      Assert.Equal(expectedBarbecue.TotalDough, actualBarbecue.TotalDough);
+      Assert.Equal(expectedBarbecue.TotalParticipants, actualBarbecue.TotalParticipants);
+      Assert.Equal(expectedBarbecue.TotalParticipantsWhoDontDrink, actualBarbecue.TotalParticipantsWhoDontDrink);
+      Assert.Equal(expectedBarbecue.TotalParticipantsWhoDrink, actualBarbecue.TotalParticipantsWhoDrink);
     }
 
     [Fact]
@@ -39,11 +54,12 @@ namespace Churras.Test.Integration
       var expectedBarbecues = GetAllDefaultBarbecues();
 
       // Act
-      var response = await RequestGet<List<Barbecue>>(BARBECUES);
+      var response = await RequestGet<List<Barbecue>>(server, BARBECUES);
 
       // Assert
       Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-      Assert.Equal(expectedBarbecues, response.Content);
+      Assert.Equal(expectedBarbecues.Count, response.Content.Count);
+      AssertProperties(expectedBarbecues, response.Content);
     }
 
     [Fact]
@@ -53,11 +69,11 @@ namespace Churras.Test.Integration
       var expectedBarbecue = GetDefaultBarbecue();
 
       // Act
-      var response = await RequestGet<Barbecue>($"{BARBECUES}/1");
+      var response = await RequestGet<Barbecue>(server, $"{BARBECUES}/1");
 
       // Assert
       Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-      Assert.Equal(expectedBarbecue, response.Content);
+      AssertProperties(expectedBarbecue, response.Content);
     }
 
     [Fact]
@@ -67,7 +83,7 @@ namespace Churras.Test.Integration
       var expectedBarbecue = GetDefaultBarbecue();
 
       // Act
-      var response = await RequestGet<Barbecue>($"{BARBECUES}/99");
+      var response = await RequestGet<Barbecue>(server, $"{BARBECUES}/99");
 
       // Assert
       Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);

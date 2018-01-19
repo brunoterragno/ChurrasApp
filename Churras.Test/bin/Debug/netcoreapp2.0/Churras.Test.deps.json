@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "868dd0c3d6552caffd2d8294f88210334947e427"
+    "signature": "2e59b02eca48654002ec34ac6b4d1058bd1a2f49"
   },
   "compilationOptions": {},
   "targets": {
@@ -9,6 +9,7 @@
       "Churras.Test/1.0.0": {
         "dependencies": {
           "Churras.Api": "1.0.0",
+          "Microsoft.AspNetCore.TestHost": "2.0.0",
           "Microsoft.NET.Test.Sdk": "15.3.0-preview-20170628-02",
           "xunit": "2.2.0",
           "xunit.runner.visualstudio": "2.2.0"
@@ -1054,6 +1055,14 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.StaticFiles.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.TestHost/2.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting": "2.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.TestHost.dll": {}
         }
       },
       "Microsoft.AspNetCore.WebSockets/2.0.0": {
@@ -4197,6 +4206,13 @@
       "sha512": "sha512-HBMJQ1WPdHO0thltwi7agvfis3c1Kd5HFQDgyy0nV3X4mJvhVGUnymT0+QQU+GGNK9FG/uEQNE3YDSrrBamP7w==",
       "path": "microsoft.aspnetcore.staticfiles/2.0.0",
       "hashPath": "microsoft.aspnetcore.staticfiles.2.0.0.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.TestHost/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TgOj8I2OX7INrk9nZELlviFwFtEsxysG2T0RmNmMP5Jo4nuEGMj6VNUUTsHcfaUppyb0BpbmUFsY36fi+QQBUg==",
+      "path": "microsoft.aspnetcore.testhost/2.0.0",
+      "hashPath": "microsoft.aspnetcore.testhost.2.0.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.WebSockets/2.0.0": {
       "type": "package",
