@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Churras.Api;
 using Churras.Api.Models;
 using Microsoft.AspNetCore.TestHost;
-using Newtonsoft.Json;
 using Xunit;
 using static Churras.Test.RequestUtils;
+using static Churras.Test.AssertUtils<Churras.Api.Models.Barbecue>;
 
 namespace Churras.Test.Integration
 {
@@ -19,21 +19,7 @@ namespace Churras.Test.Integration
 
     const string BARBECUES = "api/barbecues";
 
-    public BarbecuesControllerTest()
-    {
-      server = new TestServer(Program.CreateBuildWebHost(Array.Empty<string>()));
-      client = server.CreateClient();
-    }
-
-    private void AssertProperties(List<Barbecue> expectedBarbecues, List<Barbecue> actualBarbecues)
-    {
-      for (int i = 0; i < actualBarbecues.Count; i++)
-      {
-        AssertProperties(expectedBarbecues[i], actualBarbecues[i]);
-      }
-    }
-
-    private void AssertProperties(Barbecue expectedBarbecue, Barbecue actualBarbecue)
+    Action<Barbecue, Barbecue> AssertBarbecueProperties = (Barbecue expectedBarbecue, Barbecue actualBarbecue) =>
     {
       Assert.Equal(expectedBarbecue.CostWithDrink, actualBarbecue.CostWithDrink);
       Assert.Equal(expectedBarbecue.CostWithoutDrink, actualBarbecue.CostWithoutDrink);
@@ -45,17 +31,12 @@ namespace Churras.Test.Integration
       Assert.Equal(expectedBarbecue.TotalParticipants, actualBarbecue.TotalParticipants);
       Assert.Equal(expectedBarbecue.TotalParticipantsWhoDontDrink, actualBarbecue.TotalParticipantsWhoDontDrink);
       Assert.Equal(expectedBarbecue.TotalParticipantsWhoDrink, actualBarbecue.TotalParticipantsWhoDrink);
+    };
 
-      // in case of any property was missed
-      AssertAllObject(expectedBarbecue, actualBarbecue);
-    }
-
-    private void AssertAllObject(Barbecue expectedBarbecue, Barbecue actualBarbecue)
+    public BarbecuesControllerTest()
     {
-      Assert.Equal(
-        JsonConvert.SerializeObject(expectedBarbecue),
-        JsonConvert.SerializeObject(actualBarbecue)
-      );
+      server = new TestServer(Program.CreateBuildWebHost(Array.Empty<string>()));
+      client = server.CreateClient();
     }
 
     [Fact]
@@ -70,7 +51,7 @@ namespace Churras.Test.Integration
       // Assert
       Assert.Equal(HttpStatusCode.OK, response.StatusCode);
       Assert.Equal(expectedBarbecues.Count, response.Content.Count);
-      AssertProperties(expectedBarbecues, response.Content);
+      AssertObject(expectedBarbecues, response.Content, AssertBarbecueProperties);
     }
 
     [Fact]
@@ -84,7 +65,7 @@ namespace Churras.Test.Integration
 
       // Assert
       Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-      AssertProperties(expectedBarbecue, response.Content);
+      AssertObject(expectedBarbecue, response.Content, AssertBarbecueProperties);
     }
 
     [Fact]

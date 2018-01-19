@@ -12,9 +12,9 @@ namespace Churras.Test.Unit
             var newBarbecue = GetDefaultBarbecue();
 
             // Assert
-            Assert.Equal("Churras Carnaval", newBarbecue.Title);
+            Assert.Equal("Churras Carnaval 1", newBarbecue.Title);
             Assert.Equal(DateTime.Now.AddDays(1).Date, newBarbecue.Date);
-            Assert.Equal("Vamos comemorar todos juntos nessa folia de sexta-feira!",
+            Assert.Equal("Vamos comemorar todos juntos nessa folia de sexta-feira 1!",
                 newBarbecue.Description);
             Assert.Equal(20, newBarbecue.CostWithDrink);
             Assert.Equal(10, newBarbecue.CostWithoutDrink);

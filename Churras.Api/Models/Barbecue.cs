@@ -6,6 +6,7 @@ namespace Churras.Api.Models
 {
   public class Barbecue
   {
+    public int Id { get; private set; }
     public string Title { get; private set; }
     public DateTime Date { get; private set; }
     public string Description { get; private set; }
@@ -19,8 +20,9 @@ namespace Churras.Api.Models
 
     public List<Participant> Participants { get; private set; } = new List<Participant>();
 
-    public Barbecue(string title, DateTime date, string description, decimal costWithDrink, decimal costWithoutDrink)
+    public Barbecue(int id, string title, DateTime date, string description, decimal costWithDrink, decimal costWithoutDrink)
     {
+      this.Id = id;
       this.Title = title;
       this.Date = date;
       this.Description = description;
