@@ -1,6 +1,6 @@
 using System;
 
-namespace Churras.Test
+namespace Churras.Api.Models
 {
   public class Participant
   {

@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace Churras.Test
+namespace Churras.Test.Unit
 {
     public class BarbecueTest : TestDataBuilder
     {
@@ -62,10 +62,10 @@ namespace Churras.Test
         {
             // Arrange
             var barbecue = GetDefaultBarbecue();
-            var newParticipant = new Participant(barbecue, name: "Bruno", dough : 5, isGoingToDrink : true);
+            var newParticipant = GetNewParticipantWithDrinkButNotEnoughMoney(barbecue);
 
             // Act & Assert
-            Assert.Throws<ArgumentException>(() => barbecue.AddParticipant(newParticipant));
+            Assert.ThrowsAny<ArgumentException>(() => barbecue.AddParticipant(newParticipant));
         }
 
         [Fact]
@@ -99,30 +99,6 @@ namespace Churras.Test
             // Assert
             Assert.Equal(1, barbecue.Participants.Count);
             Assert.Equal(10, barbecue.TotalDough);
-        }
-
-        [Fact]
-        public void Cannot_Change_Dough_When_With_Drink_Cost_Is_Bigger_Than_It()
-        {
-            // Arrange
-            var barbecue = GetDefaultBarbecue();
-            var newParticipant = GetNewParticipantWithDrink(barbecue);
-
-            // Act & Assert
-            barbecue.AddParticipant(newParticipant);
-            Assert.Throws<ArgumentException>(() => newParticipant.ChangeDough(5));
-        }
-
-        [Fact]
-        public void Cannot_Change_Dough_When_Without_Drink_Cost_Is_Bigger_Than_It()
-        {
-            // Arrange
-            var barbecue = GetDefaultBarbecue();
-            var newParticipant = GetNewParticipantWithoutDrink(barbecue);
-
-            // Act & Assert
-            barbecue.AddParticipant(newParticipant);
-            Assert.Throws<ArgumentException>(() => newParticipant.ChangeDough(5));
         }
     }
 }

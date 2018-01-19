@@ -1,0 +1,10 @@
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Api/bin/Debug/netcoreapp2.0/Churras.Api.deps.json
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Api/bin/Debug/netcoreapp2.0/Churras.Api.runtimeconfig.json
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Api/bin/Debug/netcoreapp2.0/Churras.Api.runtimeconfig.dev.json
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Api/bin/Debug/netcoreapp2.0/Churras.Api.dll
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Api/bin/Debug/netcoreapp2.0/Churras.Api.pdb
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Api/obj/Debug/netcoreapp2.0/Churras.Api.csproj.CoreCompileInputs.cache
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Api/obj/Debug/netcoreapp2.0/Churras.Api.AssemblyInfoInputs.cache
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Api/obj/Debug/netcoreapp2.0/Churras.Api.AssemblyInfo.cs
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Api/obj/Debug/netcoreapp2.0/Churras.Api.dll
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Api/obj/Debug/netcoreapp2.0/Churras.Api.pdb
