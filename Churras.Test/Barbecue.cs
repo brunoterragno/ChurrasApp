@@ -28,6 +28,16 @@ namespace Churras.Test
       this.CostWithoutDrink = costWithoutDrink;
     }
 
+    public void ChangeTitle(string title)
+    {
+      this.Title = title;
+    }
+
+    public void ChangeDate(DateTime date)
+    {
+      this.Date = date;
+    }
+
     public void AddParticipant(Participant newParticipant)
     {
       if (newParticipant.IsGoingToDrink && newParticipant.Dough < CostWithDrink)
