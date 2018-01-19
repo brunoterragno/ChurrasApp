@@ -35,5 +35,10 @@ namespace Churras.Test
 
       this.Participants.Add(newParticipant);
     }
+
+    public void RemoveParticipant(Participant participant)
+    {
+      this.Participants.Remove(participant);
+    }
   }
 }

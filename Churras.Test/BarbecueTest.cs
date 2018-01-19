@@ -91,5 +91,50 @@ namespace Churras.Test
             // Act & Assert
             Assert.Throws<ArgumentException>(() => barbecue.AddParticipant(newParticipant));
         }
+
+        [Fact]
+        public void Remove_Participant_From_An_Existent_Barbecue()
+        {
+            // Arrange
+            var barbecue = new Barbecue(
+                title: "Churras Carnaval",
+                date : DateTime.Now.AddDays(1).Date,
+                description: "Vamos comemorar todos juntos nessa folia de sexta-feira!",
+                costWithDrink : 20,
+                costWithoutDrink : 10
+            );
+            var participant = new Participant(name: "Bruno", dough : 5, isGoingToDrink : false);
+
+            // Act
+            barbecue.AddParticipant(participant);
+            barbecue.RemoveParticipant(participant);
+
+            // Assert
+            Assert.Equal(0, barbecue.Participants.Count);
+            Assert.Equal(0, barbecue.TotalDough);
+        }
+
+        [Fact]
+        public void Remove_Unexistent_Participant_From_An_Existent_Barbecue()
+        {
+            // Arrange
+            var barbecue = new Barbecue(
+                title: "Churras Carnaval",
+                date : DateTime.Now.AddDays(1).Date,
+                description: "Vamos comemorar todos juntos nessa folia de sexta-feira!",
+                costWithDrink : 20,
+                costWithoutDrink : 10
+            );
+            var participant = new Participant(name: "Bruno", dough : 5, isGoingToDrink : false);
+            var notExistParticipant = new Participant(name: "Bruno", dough : 5, isGoingToDrink : false);
+
+            // Act
+            barbecue.AddParticipant(participant);
+            barbecue.RemoveParticipant(notExistParticipant);
+
+            // Assert
+            Assert.Equal(1, barbecue.Participants.Count);
+            Assert.Equal(5, barbecue.TotalDough);
+        }
     }
 }
