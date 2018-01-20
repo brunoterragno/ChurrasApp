@@ -77,7 +77,7 @@ namespace Churras.Test.Unit
 
             // Act
             barbecue.AddParticipant(participant);
-            barbecue.RemoveParticipant(participant);
+            barbecue.RemoveParticipant(0);
 
             // Assert
             Assert.Equal(0, barbecue.Participants.Count);
@@ -90,11 +90,10 @@ namespace Churras.Test.Unit
             // Arrange
             var barbecue = GetDefaultBarbecue();
             var participant = GetNewParticipantWithoutDrink(barbecue);
-            var notExistParticipant = GetNewParticipantWithDrink(barbecue);
 
             // Act
             barbecue.AddParticipant(participant);
-            barbecue.RemoveParticipant(notExistParticipant);
+            barbecue.RemoveParticipant(99);
 
             // Assert
             Assert.Equal(1, barbecue.Participants.Count);

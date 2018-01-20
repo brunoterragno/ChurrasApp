@@ -4,6 +4,7 @@ namespace Churras.Api.Models
 {
   public class Participant
   {
+    public int Id { get; set; }
     public string Name { get; private set; }
     public decimal Dough { get; private set; }
     public bool IsGoingToDrink { get; private set; }

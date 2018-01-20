@@ -110,5 +110,21 @@ namespace Churras.Test.Integration
       // Assert
       Assert.Equal(HttpStatusCode.Created, response.StatusCode);
     }
+
+    [Fact]
+    public async Task Add_Barbecue_Participant()
+    {
+      // Arrange
+      var barbecue = GetDefaultBarbecue();
+      var newParticipant = GetNewParticipantWithDrink(barbecue);
+
+      // Act
+      var response = await RequestPost<Participant>(client, $"{BARBECUES}/1/participants", newParticipant);
+      newParticipant.Id = 1;
+
+      // Assert
+      Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+      AssertObjectAsJSON(newParticipant, response.Content);
+    }
   }
 }

@@ -39,10 +39,34 @@ namespace Churras.Api.Repositories
       return barbecues.FirstOrDefault(b => b.Id == id);
     }
 
-    public Barbecue Add(Barbecue barbecue)
+    public Barbecue GetByParticipantId(int participantId)
     {
-      barbecue.Id = barbecues.Max(x => x.Id) + 1;
-      this.barbecues.Add(barbecue);
+      var barbecue = this.barbecues.First(x => x.Participants.Any(y => y.Id == participantId));
+      return barbecue;
+    }
+
+    public Barbecue Save(Barbecue barbecue)
+    {
+      if (barbecue.Id == 0)
+      {
+        barbecue.Id = barbecues.Max(x => x.Id) + 1;
+        this.barbecues.Add(barbecue);
+      }
+      else
+      {
+        var index = this.barbecues.FindIndex(x => x.Id == barbecue.Id);
+        this.barbecues[index] = barbecue;
+      }
+
+      int counterId = 1;
+      for (int i = 0; i < this.barbecues.Count; i++)
+      {
+        for (int y = 0; y < this.barbecues[i].Participants.Count; y++)
+        {
+          this.barbecues[i].Participants[y].Id = counterId;
+          counterId++;
+        }
+      }
 
       return barbecue;
     }

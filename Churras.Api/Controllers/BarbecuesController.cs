@@ -19,6 +19,7 @@ namespace Churras.Api.Controllers
         {
             barbecueRepository = new BarbecueRepository();
         }
+
         // GET api/barbecues
         [HttpGet]
         public IActionResult Get()
@@ -27,10 +28,10 @@ namespace Churras.Api.Controllers
         }
 
         // GET api/barbecues/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [HttpGet("{barbecueId}")]
+        public IActionResult Get(int barbecueId)
         {
-            var barbecue = barbecueRepository.Get(id);
+            var barbecue = barbecueRepository.Get(barbecueId);
             if (barbecue == null)
                 throw new NotFoundException("Id", "Resource not found", ErrorResultType.not_found);
 
@@ -41,8 +42,28 @@ namespace Churras.Api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Barbecue newBarbecue)
         {
-            var barbecue = barbecueRepository.Add(newBarbecue);
+            var barbecue = barbecueRepository.Save(newBarbecue);
             return Created($"api/barbecues/{barbecue.Id}", barbecue);
+        }
+
+        // POST api/barbecues/{barbecueId}/participants
+        [HttpPost("{barbecueId}/participants")]
+        public IActionResult Post([FromBody] Participant newParticipant)
+        {
+            var barbecue = barbecueRepository.Get(newParticipant.Barbecue.Id);
+            barbecue.AddParticipant(newParticipant);
+            barbecueRepository.Save(barbecue);
+            return Created($"api/barbecues/{barbecue.Id}/participants/{newParticipant.Id}", newParticipant);
+        }
+
+        // POST api/barbecues/{id}/participants
+        [HttpDelete("{barbecueId}/participants/{participantId}")]
+        public IActionResult DeleteParticipant(int participantId)
+        {
+            var barbecue = barbecueRepository.GetByParticipantId(participantId);
+            barbecue.RemoveParticipant(participantId);
+            barbecueRepository.Save(barbecue);
+            return NoContent();
         }
 
         // PUT api/barbecues/5

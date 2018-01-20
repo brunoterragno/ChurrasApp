@@ -52,8 +52,9 @@ namespace Churras.Api.Models
       this.Participants.Add(newParticipant);
     }
 
-    public void RemoveParticipant(Participant participant)
+    public void RemoveParticipant(int participantId)
     {
+      var participant = this.Participants.FirstOrDefault(p => p.Id == participantId);
       this.Participants.Remove(participant);
     }
   }
