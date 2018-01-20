@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Churras.Api.Models;
 using Churras.Api.Repositories;
+using Churras.Api.Utils.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Churras.Api.Controllers
 {
@@ -30,14 +32,18 @@ namespace Churras.Api.Controllers
         {
             var barbecue = barbecueRepository.Get(id);
             if (barbecue == null)
-                return NotFound();
+                throw new NotFoundException("Id", "Resource not found", ErrorResultType.not_found);
 
             return Ok(barbecue);
         }
 
         // POST api/barbecues
         [HttpPost]
-        public void Post([FromBody] string value) { }
+        public IActionResult Post([FromBody] Barbecue newBarbecue)
+        {
+            var barbecue = barbecueRepository.Add(newBarbecue);
+            return Created($"api/barbecues/{barbecue.Id}", barbecue);
+        }
 
         // PUT api/barbecues/5
         [HttpPut("{id}")]

@@ -38,5 +38,13 @@ namespace Churras.Api.Repositories
     {
       return barbecues.FirstOrDefault(b => b.Id == id);
     }
+
+    public Barbecue Add(Barbecue barbecue)
+    {
+      barbecue.Id = barbecues.Max(x => x.Id) + 1;
+      this.barbecues.Add(barbecue);
+
+      return barbecue;
+    }
   }
 }

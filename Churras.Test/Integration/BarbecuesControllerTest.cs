@@ -5,10 +5,12 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Churras.Api;
 using Churras.Api.Models;
+using Churras.Test;
 using Microsoft.AspNetCore.TestHost;
+using Newtonsoft.Json;
 using Xunit;
+using static Churras.Test.AssertUtils;
 using static Churras.Test.RequestUtils;
-using static Churras.Test.AssertUtils<Churras.Api.Models.Barbecue>;
 
 namespace Churras.Test.Integration
 {
@@ -82,17 +84,31 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
+    public async Task Should_Send_Bad_Request_When_Wrong_Data()
+    {
+      // Arrange
+      var newBarbecue = new Barbecue(0, "", DateTime.MinValue, "", 0, 0);
+      var expectedValidationErrorResult = GetBarbecueBadRequestValidationErrorResult();
+
+      // Act
+      var response = await RequestPost<ValidationErrorResult>(client, BARBECUES, newBarbecue);
+
+      // Assert
+      Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+      AssertObjectAsJSON(expectedValidationErrorResult, response.Content);
+    }
+
+    [Fact]
     public async Task Create_New_Barbecue()
     {
       // Arrange
       var newBarbecue = GetDefaultBarbecue();
-      var expectedStatusCode = HttpStatusCode.Created;
 
       // Act
       var response = await RequestPost<Barbecue>(client, BARBECUES, newBarbecue);
 
       // Assert
-      Assert.Equal(expectedStatusCode, response.StatusCode);
+      Assert.Equal(HttpStatusCode.Created, response.StatusCode);
     }
   }
 }

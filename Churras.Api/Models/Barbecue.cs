@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentValidation;
 
 namespace Churras.Api.Models
 {
   public class Barbecue
   {
-    public int Id { get; private set; }
+    public int Id { get; internal set; }
     public string Title { get; private set; }
     public DateTime Date { get; private set; }
     public string Description { get; private set; }
@@ -54,6 +55,20 @@ namespace Churras.Api.Models
     public void RemoveParticipant(Participant participant)
     {
       this.Participants.Remove(participant);
+    }
+  }
+
+  public class BarbecueValidator : AbstractValidator<Barbecue>
+  {
+    public BarbecueValidator()
+    {
+      RuleFor(b => b.Title)
+        .NotEmpty();
+      RuleFor(b => b.Date)
+        .GreaterThanOrEqualTo(DateTime.Now.Date)
+        .WithMessage("'Date' must be greater than or equal to today.");
+      RuleFor(b => b.CostWithDrink)
+        .GreaterThan(0);
     }
   }
 }
