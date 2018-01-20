@@ -53,6 +53,7 @@ namespace Churras.Api.Controllers
             var barbecue = barbecueRepository.Get(newParticipant.Barbecue.Id);
             barbecue.AddParticipant(newParticipant);
             barbecueRepository.Save(barbecue);
+
             return Created($"api/barbecues/{barbecue.Id}/participants/{newParticipant.Id}", newParticipant);
         }
 
@@ -63,6 +64,7 @@ namespace Churras.Api.Controllers
             var barbecue = barbecueRepository.GetByParticipantId(participantId);
             barbecue.RemoveParticipant(participantId);
             barbecueRepository.Save(barbecue);
+
             return NoContent();
         }
 
