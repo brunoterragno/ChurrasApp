@@ -19,7 +19,8 @@ namespace Churras.Api.Models
     public int TotalParticipantsWhoDrink { get => Participants.Count(p => p.IsGoingToDrink); }
     public int TotalParticipantsWhoDontDrink { get => Participants.Count(p => !p.IsGoingToDrink); }
 
-    public List<Participant> Participants { get; private set; } = new List<Participant>();
+    private readonly List<Participant> _participants = new List<Participant>();
+    public IReadOnlyCollection<Participant> Participants => _participants;
 
     public Barbecue(int id, string title, DateTime date, string description, decimal costWithDrink, decimal costWithoutDrink)
     {
@@ -49,13 +50,13 @@ namespace Churras.Api.Models
       if (newParticipant.IsGoingToDrink == false && newParticipant.Dough < CostWithoutDrink)
         throw new ArgumentException("Should give more money");
 
-      this.Participants.Add(newParticipant);
+      this._participants.Add(newParticipant);
     }
 
     public void RemoveParticipant(int participantId)
     {
-      var participant = this.Participants.FirstOrDefault(p => p.Id == participantId);
-      this.Participants.Remove(participant);
+      var participant = this._participants.FirstOrDefault(p => p.Id == participantId);
+      this._participants.Remove(participant);
     }
   }
 
