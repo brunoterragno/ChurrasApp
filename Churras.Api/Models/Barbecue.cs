@@ -20,7 +20,7 @@ namespace Churras.Api.Models
     public int TotalParticipantsWhoDontDrink { get => Participants.Count(p => !p.IsGoingToDrink); }
 
     private readonly List<Participant> _participants = new List<Participant>();
-    public IReadOnlyCollection<Participant> Participants => _participants;
+    public IReadOnlyList<Participant> Participants => _participants;
 
     public Barbecue(int id, string title, DateTime date, string description, decimal costWithDrink, decimal costWithoutDrink)
     {

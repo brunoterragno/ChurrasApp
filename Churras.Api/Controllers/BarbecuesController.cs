@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Churras.Api.Models;
 using Churras.Api.Repositories;
 using Churras.Api.Utils.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Churras.Api.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     public class BarbecuesController : Controller
     {
@@ -22,6 +25,7 @@ namespace Churras.Api.Controllers
 
         // GET api/barbecues
         [HttpGet]
+        [SwaggerResponse((int) HttpStatusCode.OK, typeof(Barbecue))]
         public IActionResult Get()
         {
             return Ok(barbecueRepository.Get());
@@ -29,6 +33,8 @@ namespace Churras.Api.Controllers
 
         // GET api/barbecues/5
         [HttpGet("{barbecueId}")]
+        [SwaggerResponse((int) HttpStatusCode.OK, typeof(Barbecue))]
+        [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult))]
         public IActionResult Get(int barbecueId)
         {
             var barbecue = barbecueRepository.Get(barbecueId);
