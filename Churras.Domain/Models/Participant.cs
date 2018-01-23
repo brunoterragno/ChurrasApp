@@ -9,11 +9,15 @@ namespace Churras.Domain.Models
     public decimal Dough { get; private set; }
     public bool IsGoingToDrink { get; private set; }
 
+    public int BarbecueId { get; private set; }
     public Barbecue Barbecue { get; private set; }
+
+    public Participant() { }
 
     public Participant(Barbecue barbecue, string name, decimal dough, bool isGoingToDrink)
     {
       this.Barbecue = barbecue;
+      this.BarbecueId = this.Barbecue.Id;
       this.Name = name;
       this.Dough = dough;
       this.IsGoingToDrink = isGoingToDrink;

@@ -8,7 +8,9 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.0.1" />
     <PackageReference Include="swashbuckle.aspnetcore" Version="1.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Examples" Version="2.6.0" />
   </ItemGroup>

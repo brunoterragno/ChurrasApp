@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using Churras.Domain.Contracts.Repositories;
+using Churras.Domain.DTOs;
 using Churras.Domain.Exceptions;
 using Churras.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -16,24 +18,24 @@ namespace Churras.Api.Controllers
     [Route("api/[controller]")]
     public class BarbecuesController : Controller
     {
+        IMapper mapper;
         IBarbecueRepository barbecueRepository;
 
-        public BarbecuesController(IBarbecueRepository barbecueRepository)
+        public BarbecuesController(IMapper mapper, IBarbecueRepository barbecueRepository)
         {
+            this.mapper = mapper;
             this.barbecueRepository = barbecueRepository;
         }
 
-        // GET api/barbecues
         [HttpGet]
-        [SwaggerResponse((int) HttpStatusCode.OK, typeof(Barbecue))]
+        [SwaggerResponse((int) HttpStatusCode.OK, typeof(BarbecueDTO))]
         public IActionResult Get()
         {
-            return Ok(barbecueRepository.Get());
+            return Ok(mapper.Map<List<BarbecueDTO>>(barbecueRepository.Get()));
         }
 
-        // GET api/barbecues/5
         [HttpGet("{barbecueId}")]
-        [SwaggerResponse((int) HttpStatusCode.OK, typeof(Barbecue))]
+        [SwaggerResponse((int) HttpStatusCode.OK, typeof(BarbecueDTO))]
         [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult))]
         public IActionResult Get(int barbecueId)
         {
@@ -41,29 +43,35 @@ namespace Churras.Api.Controllers
             if (barbecue == null)
                 throw new NotFoundException("Id", "Resource not found", ErrorResultType.not_found);
 
-            return Ok(barbecue);
+            return Ok(mapper.Map<BarbecueDTO>(barbecue));
         }
 
-        // POST api/barbecues
         [HttpPost]
-        public IActionResult Post([FromBody] Barbecue newBarbecue)
+        public IActionResult Post([FromBody] BarbecueDTO newBarbecue)
         {
-            var barbecue = barbecueRepository.Save(newBarbecue);
-            return Created($"api/barbecues/{barbecue.Id}", barbecue);
+            newBarbecue.Id = 0;
+            var barbecue = barbecueRepository.Save(mapper.Map<Barbecue>(newBarbecue));
+
+            return Created(
+                $"api/barbecues/{barbecue.Id}",
+                mapper.Map<BarbecueDTO>(barbecue)
+            );
         }
 
-        // POST api/barbecues/{barbecueId}/participants
         [HttpPost("{barbecueId}/participants")]
-        public IActionResult Post([FromBody] Participant newParticipant)
+        public IActionResult Post(int barbecueId, [FromBody] ParticipantDTO newParticipant)
         {
-            var barbecue = barbecueRepository.Get(newParticipant.Barbecue.Id);
-            barbecue.AddParticipant(newParticipant);
+            var barbecue = barbecueRepository.Get(barbecueId);
+            var participant = mapper.Map<Participant>(newParticipant);
+            barbecue.AddParticipant(participant);
             barbecueRepository.Save(barbecue);
 
-            return Created($"api/barbecues/{barbecue.Id}/participants/{newParticipant.Id}", newParticipant);
+            return Created(
+                $"api/barbecues/{barbecue.Id}/participants/{participant.Id}",
+                mapper.Map<ParticipantDTO>(participant)
+            );
         }
 
-        // POST api/barbecues/{id}/participants
         [HttpDelete("{barbecueId}/participants/{participantId}")]
         public IActionResult DeleteParticipant(int participantId)
         {
@@ -74,12 +82,10 @@ namespace Churras.Api.Controllers
             return NoContent();
         }
 
-        // PUT api/barbecues/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value) { }
+        // [HttpPut("{id}")]
+        // public void Put(int id, [FromBody] string value) { }
 
-        // DELETE api/barbecues/5
-        [HttpDelete("{id}")]
-        public void Delete(int id) { }
+        // [HttpDelete("{id}")]
+        // public void Delete(int id) { }
     }
 }

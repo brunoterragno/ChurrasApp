@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentValidation;
 
 namespace Churras.Domain.Models
 {
@@ -22,9 +21,10 @@ namespace Churras.Domain.Models
     private readonly List<Participant> _participants = new List<Participant>();
     public IReadOnlyList<Participant> Participants => _participants;
 
-    public Barbecue(int id, string title, DateTime date, string description, decimal costWithDrink, decimal costWithoutDrink)
+    public Barbecue() { }
+
+    public Barbecue(string title, DateTime date, string description, decimal costWithDrink, decimal costWithoutDrink)
     {
-      this.Id = id;
       this.Title = title;
       this.Date = date;
       this.Description = description;
@@ -57,20 +57,6 @@ namespace Churras.Domain.Models
     {
       var participant = this._participants.FirstOrDefault(p => p.Id == participantId);
       this._participants.Remove(participant);
-    }
-  }
-
-  public class BarbecueValidator : AbstractValidator<Barbecue>
-  {
-    public BarbecueValidator()
-    {
-      RuleFor(b => b.Title)
-        .NotEmpty();
-      RuleFor(b => b.Date)
-        .GreaterThanOrEqualTo(DateTime.Now.Date)
-        .WithMessage("'Date' must be greater than or equal to today.");
-      RuleFor(b => b.CostWithDrink)
-        .GreaterThan(0);
     }
   }
 }

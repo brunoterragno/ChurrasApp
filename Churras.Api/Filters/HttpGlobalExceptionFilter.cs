@@ -39,10 +39,7 @@ namespace Churras.Api.Filters
       {
         LogInternalServerError(context);
         var errorResult = new ValidationErrorResult(message, GetInternalServerError());
-
-        if (_env.IsDevelopment())
-          errorResult.AddDeveloperMessage(context.Exception.Message);
-
+        errorResult.AddDeveloperMessage(context.Exception.Message);
         var objectResult = GetObjectResultType(errorResult);
         this.BuildResponse(context, objectResult);
       }
@@ -50,6 +47,7 @@ namespace Churras.Api.Filters
 
     private void LogInternalServerError(ExceptionContext context)
     {
+      System.Console.WriteLine(context.Exception.Message);
       _logger.LogError(new EventId(context.Exception.HResult),
         context.Exception,
         context.Exception.Message);

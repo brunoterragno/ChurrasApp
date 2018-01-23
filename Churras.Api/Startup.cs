@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Churras.Api.Filters;
 using Churras.Domain.Contracts.Repositories;
-using Churras.Domain.Models;
+using Churras.Domain.DTOs;
+using Churras.Repository;
 using Churras.Repository.Repositories;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -38,8 +41,10 @@ namespace Churras.Api
             });
 
             mvc.AddFluentValidation(fvc =>
-                fvc.RegisterValidatorsFromAssemblyContaining<Barbecue>()
+                fvc.RegisterValidatorsFromAssemblyContaining<BarbecueDTO>()
             );
+
+            services.AddAutoMapper();
 
             services.AddSwaggerGen(c =>
             {
@@ -52,7 +57,12 @@ namespace Churras.Api
 
         private void BootstrapDependencies(IServiceCollection services)
         {
+            services.AddDbContext<ChurrasContext>(opt =>
+                opt.UseInMemoryDatabase("churras_db")
+            );
+
             services.AddSingleton<IBarbecueRepository, BarbecueRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +78,9 @@ namespace Churras.Api
             app.UseSwaggerUI(c =>
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Churras API")
             );
+
+            var context = app.ApplicationServices.GetService<ChurrasContext>();
+            Seed.AddTestData(context);
         }
 
         private string GetXmlInfoPath()
