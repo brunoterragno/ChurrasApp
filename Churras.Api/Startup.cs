@@ -57,11 +57,38 @@ namespace Churras.Api
 
         private void BootstrapDependencies(IServiceCollection services)
         {
+            var databaseStrategy = Configuration.GetValue<string>("DBStrategy");
+
             services.AddDbContext<ChurrasContext>(opt =>
-                opt.UseInMemoryDatabase("churras_db")
-            );
+            {
+                if (databaseStrategy == "InMemory")
+                    opt.UseInMemoryDatabase("churras_db");
+                else
+                    opt.UseSqlite("Data Source=churras_db");
+
+                System.Console.WriteLine($"DBStrategy: {databaseStrategy}");
+            });
 
             services.AddSingleton<IBarbecueRepository, BarbecueRepository>();
+        }
+
+        private void RunMigrationsAndSeed(IApplicationBuilder app)
+        {
+            var databaseStrategy = Configuration.GetValue<string>("DBStrategy");
+
+            using(var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<ChurrasContext>();
+                if (databaseStrategy == "SQLite")
+                {
+                    context.Database.Migrate();
+                    context.EnsureSeedData();
+                }
+                else
+                {
+                    context.AddTestData();
+                }
+            }
 
         }
 
@@ -79,8 +106,7 @@ namespace Churras.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Churras API")
             );
 
-            var context = app.ApplicationServices.GetService<ChurrasContext>();
-            Seed.AddTestData(context);
+            this.RunMigrationsAndSeed(app);
         }
 
         private string GetXmlInfoPath()

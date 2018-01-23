@@ -5,7 +5,15 @@ namespace Churras.Repository
 {
   public static class Seed
   {
-    public static void AddTestData(ChurrasContext context)
+    public static void EnsureSeedData(this ChurrasContext context)
+    {
+      if (context.AllMigrationsApplied())
+      {
+        AddTestData(context);
+      }
+    }
+
+    public static void AddTestData(this ChurrasContext context)
     {
       context.Barbecues.Add(new Barbecue(
         title: "Churras Carnaval 1",
@@ -25,7 +33,7 @@ namespace Churras.Repository
 
       context.SaveChanges();
 
-      Console.WriteLine("TestData added");
+      Console.WriteLine("TestData: Added");
     }
   }
 }

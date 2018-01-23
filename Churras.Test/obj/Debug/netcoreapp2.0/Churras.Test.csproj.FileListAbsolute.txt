@@ -18,3 +18,4 @@
 /Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/Churras.Api.xml
 /Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/Churras.Domain.pdb
 /Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/Churras.Repository.pdb
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/appsettings.json
