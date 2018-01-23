@@ -1,0 +1,10 @@
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Repository/bin/Debug/netcoreapp2.0/Churras.Repository.deps.json
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Repository/bin/Debug/netcoreapp2.0/Churras.Repository.dll
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Repository/bin/Debug/netcoreapp2.0/Churras.Repository.pdb
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Repository/bin/Debug/netcoreapp2.0/Churras.Domain.dll
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Repository/bin/Debug/netcoreapp2.0/Churras.Domain.pdb
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Repository/obj/Debug/netcoreapp2.0/Churras.Repository.csproj.CoreCompileInputs.cache
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Repository/obj/Debug/netcoreapp2.0/Churras.Repository.AssemblyInfoInputs.cache
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Repository/obj/Debug/netcoreapp2.0/Churras.Repository.AssemblyInfo.cs
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Repository/obj/Debug/netcoreapp2.0/Churras.Repository.dll
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Repository/obj/Debug/netcoreapp2.0/Churras.Repository.pdb
