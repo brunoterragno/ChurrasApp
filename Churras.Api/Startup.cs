@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Churras.Api.Filters;
-using Churras.Api.Models;
+using Churras.Domain.Contracts.Repositories;
+using Churras.Domain.Models;
+using Churras.Repository.Repositories;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,6 +46,13 @@ namespace Churras.Api
                 c.SwaggerDoc("v1", BuildSwaggerInfo());
                 c.IncludeXmlComments(GetXmlInfoPath());
             });
+
+            this.BootstrapDependencies(services);
+        }
+
+        private void BootstrapDependencies(IServiceCollection services)
+        {
+            services.AddSingleton<IBarbecueRepository, BarbecueRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

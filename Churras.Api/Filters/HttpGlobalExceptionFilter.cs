@@ -3,10 +3,10 @@ namespace Churras.Api.Filters
   using System.Collections.Generic;
   using System.Linq;
   using System.Net;
-  using Churras.Api.Models;
-  using Churras.Api.Utils.Exceptions;
   using Churras.Api.Utils.ObjectResults;
   using Churras.Api.Utils;
+  using Churras.Domain.Exceptions;
+  using Churras.Domain.Models;
   using Microsoft.AspNetCore.Hosting;
   using Microsoft.AspNetCore.Mvc.Filters;
   using Microsoft.AspNetCore.Mvc;

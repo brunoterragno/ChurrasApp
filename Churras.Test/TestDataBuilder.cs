@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Churras.Api.Models;
+using Churras.Domain.Models;
 using Xunit;
 
 namespace Churras.Test

@@ -4848,6 +4848,33 @@
         "runtime": {
           "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll": {}
         }
+      },
+      "Churras.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "FluentValidation.AspNetCore": "7.2.1",
+          "Microsoft.AspNetCore.All": "2.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Churras.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Churras.Domain.dll": {}
+        }
+      },
+      "Churras.Repository/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "Churras.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Churras.Repository.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Churras.Repository.dll": {}
+        }
       }
     }
   },
@@ -12713,11 +12740,22 @@
         "windowsazure.storage.8.1.4.nupkg.sha512",
         "windowsazure.storage.nuspec"
       ]
+    },
+    "Churras.Domain/1.0.0": {
+      "type": "project",
+      "path": "../Churras.Domain/Churras.Domain.csproj",
+      "msbuildProject": "../Churras.Domain/Churras.Domain.csproj"
+    },
+    "Churras.Repository/1.0.0": {
+      "type": "project",
+      "path": "../Churras.Repository/Churras.Repository.csproj",
+      "msbuildProject": "../Churras.Repository/Churras.Repository.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
-      "FluentValidation.AspNetCore >= 7.2.1",
+      "Churras.Domain >= 1.0.0",
+      "Churras.Repository >= 1.0.0",
       "Microsoft.AspNetCore.All >= 2.0.0",
       "Microsoft.NETCore.App >= 2.0.0",
       "Swashbuckle.AspNetCore.Examples >= 2.6.0",
@@ -12751,7 +12789,14 @@
       },
       "frameworks": {
         "netcoreapp2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/brunoterragno/Documents/Projects/Churras/Churras.Domain/Churras.Domain.csproj": {
+              "projectPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Domain/Churras.Domain.csproj"
+            },
+            "/Users/brunoterragno/Documents/Projects/Churras/Churras.Repository/Churras.Repository.csproj": {
+              "projectPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Repository/Churras.Repository.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -12771,10 +12816,6 @@
           "Microsoft.AspNetCore.All": {
             "target": "Package",
             "version": "2.0.0"
-          },
-          "FluentValidation.AspNetCore": {
-            "target": "Package",
-            "version": "7.2.1"
           },
           "swashbuckle.aspnetcore": {
             "target": "Package",

@@ -13,3 +13,8 @@
 /Users/brunoterragno/Documents/Projects/Churras/Churras.Test/obj/Debug/netcoreapp2.0/Churras.Test.pdb
 /Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/Churras.Api.dll
 /Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/Churras.Api.pdb
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/Churras.Domain.dll
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/Churras.Repository.dll
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/Churras.Api.xml
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/Churras.Domain.pdb
+/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/bin/Debug/netcoreapp2.0/Churras.Repository.pdb

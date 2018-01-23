@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Churras.Api.Models;
-using Churras.Api.Repositories;
-using Churras.Api.Utils.Exceptions;
+using Churras.Domain.Contracts.Repositories;
+using Churras.Domain.Exceptions;
+using Churras.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -16,11 +16,11 @@ namespace Churras.Api.Controllers
     [Route("api/[controller]")]
     public class BarbecuesController : Controller
     {
-        BarbecueRepository barbecueRepository;
+        IBarbecueRepository barbecueRepository;
 
-        public BarbecuesController()
+        public BarbecuesController(IBarbecueRepository barbecueRepository)
         {
-            barbecueRepository = new BarbecueRepository();
+            this.barbecueRepository = barbecueRepository;
         }
 
         // GET api/barbecues

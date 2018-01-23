@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Churras.Api;
-using Churras.Api.Models;
+using Churras.Domain.Models;
 using Churras.Test;
 using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;

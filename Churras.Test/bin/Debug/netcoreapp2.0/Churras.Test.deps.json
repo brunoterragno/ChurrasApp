@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "8c40fcd05d3541af921673979024b21305cfaa62"
+    "signature": "ff620481d0ae1363590927f689f27ab72c87df73"
   },
   "compilationOptions": {},
   "targets": {
@@ -9,6 +9,7 @@
       "Churras.Test/1.0.0": {
         "dependencies": {
           "Churras.Api": "1.0.0",
+          "Churras.Domain": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "2.0.0",
           "Microsoft.NET.Test.Sdk": "15.3.0-preview-20170628-02",
           "xunit": "2.2.0",
@@ -2395,6 +2396,57 @@
           "lib/netstandard1.5/StackExchange.Redis.StrongName.dll": {}
         }
       },
+      "Swashbuckle.AspNetCore/1.1.0": {
+        "dependencies": {
+          "Swashbuckle.AspNetCore.Swagger": "1.1.0",
+          "Swashbuckle.AspNetCore.SwaggerGen": "1.1.0",
+          "Swashbuckle.AspNetCore.SwaggerUI": "1.1.0"
+        },
+        "runtime": {
+          "lib/netstandard1.6/Swashbuckle.AspNetCore.dll": {}
+        }
+      },
+      "Swashbuckle.AspNetCore.Examples/2.6.0": {
+        "dependencies": {
+          "Swashbuckle.AspNetCore.SwaggerGen": "1.1.0"
+        },
+        "runtime": {
+          "lib/netstandard1.6/Swashbuckle.AspNetCore.Examples.dll": {}
+        }
+      },
+      "Swashbuckle.AspNetCore.Swagger/1.1.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Core": "2.0.0",
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.0.0"
+        },
+        "runtime": {
+          "lib/netstandard1.6/Swashbuckle.AspNetCore.Swagger.dll": {}
+        }
+      },
+      "Swashbuckle.AspNetCore.SwaggerGen/1.1.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.ApiExplorer": "2.0.0",
+          "Microsoft.AspNetCore.Mvc.Core": "2.0.0",
+          "Microsoft.AspNetCore.Mvc.DataAnnotations": "2.0.0",
+          "Swashbuckle.AspNetCore.Swagger": "1.1.0",
+          "System.Xml.XPath": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.6/Swashbuckle.AspNetCore.SwaggerGen.dll": {}
+        }
+      },
+      "Swashbuckle.AspNetCore.SwaggerUI/1.1.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Routing": "2.0.0",
+          "Microsoft.AspNetCore.StaticFiles": "2.0.0",
+          "Microsoft.Extensions.FileProviders.Embedded": "2.0.0",
+          "Newtonsoft.Json": "10.0.1",
+          "System.Xml.XPath": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.6/Swashbuckle.AspNetCore.SwaggerUI.dll": {}
+        }
+      },
       "System.AppContext/4.3.0": {
         "dependencies": {
           "System.Runtime": "4.3.0"
@@ -3612,11 +3664,31 @@
       },
       "Churras.Api/1.0.0": {
         "dependencies": {
+          "Churras.Domain": "1.0.0",
+          "Churras.Repository": "1.0.0",
+          "Microsoft.AspNetCore.All": "2.0.0",
+          "Swashbuckle.AspNetCore.Examples": "2.6.0",
+          "Swashbuckle.AspNetCore": "1.1.0"
+        },
+        "runtime": {
+          "Churras.Api.dll": {}
+        }
+      },
+      "Churras.Domain/1.0.0": {
+        "dependencies": {
           "FluentValidation.AspNetCore": "7.2.1",
           "Microsoft.AspNetCore.All": "2.0.0"
         },
         "runtime": {
-          "Churras.Api.dll": {}
+          "Churras.Domain.dll": {}
+        }
+      },
+      "Churras.Repository/1.0.0": {
+        "dependencies": {
+          "Churras.Domain": "1.0.0"
+        },
+        "runtime": {
+          "Churras.Repository.dll": {}
         }
       }
     }
@@ -5020,6 +5092,41 @@
       "path": "stackexchange.redis.strongname/1.2.4",
       "hashPath": "stackexchange.redis.strongname.1.2.4.nupkg.sha512"
     },
+    "Swashbuckle.AspNetCore/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xlbi/AUp3UM4DmPX0SIV50xboMZDl64pY45nBsdDJarUK0i5pSi/FLBqUOikdP7wUrFvtOAEnOW0cHkR6hyaeA==",
+      "path": "swashbuckle.aspnetcore/1.1.0",
+      "hashPath": "swashbuckle.aspnetcore.1.1.0.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore.Examples/2.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1iT5tz1HypAJ0OWDEkn+ec4EYYHrNN/ChzJM6Ol+Y7ea1Nm+rjV44VjUbOM2Kbyhhk9/IWmuq2W72x9bgfmjOg==",
+      "path": "swashbuckle.aspnetcore.examples/2.6.0",
+      "hashPath": "swashbuckle.aspnetcore.examples.2.6.0.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore.Swagger/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zOMSwaORAM916wnoDilH9eTyBN01Ch4L4VE8s4xIiESOpHMMHBvVmPxSGMsmo+CltgM74o92KVrIcLYGCKlbXQ==",
+      "path": "swashbuckle.aspnetcore.swagger/1.1.0",
+      "hashPath": "swashbuckle.aspnetcore.swagger.1.1.0.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore.SwaggerGen/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5ErpRhRIkJKRjQ33CsTIsmBypDsWQNp28CsM8UsOwZ9aaw3UBsU4Ts2ZDGe7yvZiti8FrU8iQ5VYw9bvrHiPpA==",
+      "path": "swashbuckle.aspnetcore.swaggergen/1.1.0",
+      "hashPath": "swashbuckle.aspnetcore.swaggergen.1.1.0.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore.SwaggerUI/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gdV8MczYGIuxARtmDYBTbTKC0IJMhrQmZ4Uev8N/pOGQlTcwBYYlUn8X+8RcC7ATZQOOXBx4RBOlk+gbXbLfkg==",
+      "path": "swashbuckle.aspnetcore.swaggerui/1.1.0",
+      "hashPath": "swashbuckle.aspnetcore.swaggerui.1.1.0.nupkg.sha512"
+    },
     "System.AppContext/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -5763,6 +5870,16 @@
       "hashPath": "xunit.runner.visualstudio.2.2.0.nupkg.sha512"
     },
     "Churras.Api/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Churras.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Churras.Repository/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
