@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Churras.Domain.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Churras.Domain.Exceptions
 {
   [Serializable]
-  public class BaseException : Exception
+  public abstract class BaseException : Exception
   {
     public List<ValidationError> Errors { get; } = new List<ValidationError>();
 
@@ -19,5 +20,7 @@ namespace Churras.Domain.Exceptions
     {
       this.Errors = errors;
     }
+
+    public abstract ObjectResult GetObjectResult(ValidationErrorResult errorResult);
   }
 }

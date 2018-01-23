@@ -32,15 +32,17 @@ namespace Churras.Api.Filters
       {
         var ex = context.Exception as BaseException;
         var errorResult = new ValidationErrorResult(message, ex.Errors);
-        var objectResult = GetObjectResultType(errorResult);
-        this.BuildResponse(context, objectResult);
+        this.BuildResponse(context, ex.GetObjectResult(errorResult));
       }
       else
       {
         LogInternalServerError(context);
         var errorResult = new ValidationErrorResult(message, GetInternalServerError());
-        errorResult.AddDeveloperMessage(context.Exception.Message);
-        var objectResult = GetObjectResultType(errorResult);
+
+        if (_env.IsDevelopment())
+          errorResult.AddDeveloperMessage(context.Exception.Message);
+
+        var objectResult = new InternalServerErrorObjectResult(errorResult);
         this.BuildResponse(context, objectResult);
       }
     }
@@ -60,20 +62,6 @@ namespace Churras.Api.Filters
       errors.Add(new ValidationError(null, errorMsg, ErrorResultType.server_error));
 
       return errors;
-    }
-
-    private ObjectResult GetObjectResultType(ValidationErrorResult errorResult)
-    {
-      var type = errorResult.Errors.FirstOrDefault().Type;
-      switch (type)
-      {
-        case ErrorResultType.invalid_parameter:
-          return new BadRequestObjectResult(errorResult);
-        case ErrorResultType.not_found:
-          return new NotFoundObjectResult(errorResult);
-        default:
-          return new InternalServerErrorObjectResult(errorResult);
-      }
     }
 
     private void BuildResponse(ExceptionContext context, ObjectResult result)
