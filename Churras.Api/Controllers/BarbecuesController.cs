@@ -71,7 +71,6 @@ namespace Churras.Api.Controllers
             barbecue.ChangeCostWithDrink(editedBarbecue.CostWithDrink);
             barbecue.ChangeCostWithoutDrink(editedBarbecue.CostWithoutDrink);
             barbecueRepository.Save(barbecue);
-            System.Console.WriteLine(JsonConvert.SerializeObject(barbecue));
 
             return Ok(mapper.Map<BarbecueDTO>(barbecue));
         }
