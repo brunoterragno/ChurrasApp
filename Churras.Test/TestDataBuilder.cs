@@ -42,6 +42,10 @@ namespace Churras.Test
       );
       barbecueTwo.Id = 2;
 
+      var participantOne = new Participant(barbecueTwo, "Participante 1", 100, true);
+      participantOne.Id = 1;
+      barbecueTwo.AddParticipant(participantOne);
+
       list.Add(barbecueOne);
       list.Add(barbecueTwo);
 
@@ -81,6 +85,24 @@ namespace Churras.Test
     public ValidationErrorResult GetBarbecuePutBadRequestValidationErrorResult()
     {
       return new ValidationErrorResult("Error when requesting PUT /api/barbecues/1", GetBarbecueValidationErrors());
+    }
+
+    private List<ValidationError> GetParticipantValidationErrors()
+    {
+      var expectedValidationError = new List<ValidationError>();
+      expectedValidationError.Add(new ValidationError("Name", "'Name' should not be empty.", ErrorResultType.invalid_parameter));
+
+      return expectedValidationError;
+    }
+
+    public ValidationErrorResult GetParticipantPostBadRequestValidationErrorResult()
+    {
+      return new ValidationErrorResult("Error when requesting POST /api/barbecues/2/participants", GetParticipantValidationErrors());
+    }
+
+    public ValidationErrorResult GetParticipantPutBadRequestValidationErrorResult()
+    {
+      return new ValidationErrorResult("Error when requesting PUT /api/barbecues/2/participants/1", GetParticipantValidationErrors());
     }
   }
 }

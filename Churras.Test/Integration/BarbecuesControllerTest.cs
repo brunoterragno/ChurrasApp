@@ -30,7 +30,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Get_All_Barbecues()
+    public async Task Should_Get_All_Barbecues()
     {
       // Arrange
       var expectedBarbecues = Mapper.Map<List<BarbecueDTO>>(GetAllDefaultBarbecues());
@@ -45,7 +45,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Get_Specific_Barbecue()
+    public async Task Should_Get_Specific_Barbecue()
     {
       // Arrange
       var expectedBarbecue = Mapper.Map<BarbecueDTO>(GetDefaultBarbecue());
@@ -72,7 +72,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Send_Bad_Request_When_Wrong_Data()
+    public async Task Should_Send_Bad_Request_When_Send_Invalid_Data()
     {
       // Arrange
       var newBarbecue = new Barbecue("", DateTime.MinValue, "", 0, 0);
@@ -87,7 +87,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Create_New_Barbecue()
+    public async Task Should_Create_New_Barbecue()
     {
       // Arrange
       var newBarbecue = Mapper.Map<BarbecueDTO>(GetDefaultBarbecue());
@@ -100,7 +100,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Edit_An_Existing_Barbecue()
+    public async Task Should_Edit_An_Existing_Barbecue()
     {
       // Arrange
       var existingBarbecue = Mapper.Map<BarbecueDTO>(GetDefaultBarbecue());
@@ -118,7 +118,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Edit_An_Existing_With_Invalid_Data_Barbecue()
+    public async Task Should_Not_Edit_An_Existing_Barbecue_With_Invalid_Data()
     {
       // Arrange
       var expectedValidationErrorResult = GetBarbecuePutBadRequestValidationErrorResult();
@@ -136,17 +136,29 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Delete_An_Existing_Barbecue()
+    public async Task Should_Delete_An_Existing_Barbecue()
     {
       // Act
-      var response = await RequestDelete<string>(client, $"{BARBECUES}/1");
+      var deleteResponse = await RequestDelete<string>(client, $"{BARBECUES}/1");
+      var getResponse = await RequestGet<ValidationErrorResult>(client, $"{BARBECUES}/1");
 
       // Assert
-      Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+      Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
+      Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
     }
 
     [Fact]
-    public async Task Add_Barbecue_Participant()
+    public async Task Should_Send_Not_Found_When_Delete_An_Unexisting_Barbecue()
+    {
+      // Act
+      var response = await RequestDelete<ValidationErrorResult>(client, $"{BARBECUES}/99");
+
+      // Assert
+      Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Should_Add_Barbecue_Participant()
     {
       // Arrange
       var barbecue = GetDefaultBarbecue();
@@ -154,11 +166,87 @@ namespace Churras.Test.Integration
 
       // Act
       var response = await RequestPost<ParticipantDTO>(client, $"{BARBECUES}/1/participants", newParticipant);
-      newParticipant.Id = 1;
+      newParticipant.Id = 2;
 
       // Assert
       Assert.Equal(HttpStatusCode.Created, response.StatusCode);
       AssertObjectAsJSON(newParticipant, response.Content);
+    }
+
+    [Fact]
+    public async Task Should_Not_Add_Barbecue_Participant_With_Wrong_Data()
+    {
+      // Arrange
+      var expectedValidationErrorResult = GetParticipantPostBadRequestValidationErrorResult();
+      var barbecue = GetDefaultBarbecue();
+      var newParticipant = Mapper.Map<ParticipantDTO>(GetNewParticipantWithDrink(barbecue));
+      newParticipant.Name = null;
+
+      // Act
+      var response = await RequestPost<ValidationErrorResult>(client, $"{BARBECUES}/2/participants", newParticipant);
+
+      // Assert
+      Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+      AssertObjectAsJSON(expectedValidationErrorResult, response.Content);
+    }
+
+    [Fact]
+    public async Task Should_Edit_An_Existing_Barbecue_Participant()
+    {
+      // Arrange
+      var barbecue = GetDefaultBarbecue();
+      var participant = Mapper.Map<ParticipantDTO>(GetNewParticipantWithDrink(barbecue));
+      participant.Id = 1;
+      participant.Name = "Teste1";
+      participant.IsGoingToDrink = !participant.IsGoingToDrink;
+      participant.Dough = 1000;
+
+      // Act
+      var response = await RequestPut<ParticipantDTO>(client, $"{BARBECUES}/2/participants/1", participant);
+
+      // Assert
+      Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+      AssertObjectAsJSON(participant, response.Content);
+    }
+
+    [Fact]
+    public async Task Should_Not_Edit_An_Existing_Barbecue_Participant_With_Invalid_Data()
+    {
+      // Arrange
+      var expectedValidationErrorResult = GetParticipantPutBadRequestValidationErrorResult();
+      var barbecue = GetDefaultBarbecue();
+      var participant = Mapper.Map<ParticipantDTO>(GetNewParticipantWithDrink(barbecue));
+      participant.Id = 1;
+      participant.Name = null;
+
+      // Act
+      var response = await RequestPut<ValidationErrorResult>(client, $"{BARBECUES}/2/participants/1", participant);
+
+      // Assert
+      Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+      AssertObjectAsJSON(expectedValidationErrorResult, response.Content);
+    }
+
+    [Fact]
+    public async Task Should_Delete_Barbecue_Participant()
+    {
+      // Act
+      var deleteResponse = await RequestDelete<string>(client, $"{BARBECUES}/2/participants/1");
+      var getResponse = await RequestGet<BarbecueDTO>(client, $"{BARBECUES}/2");
+
+      // Assert
+      Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
+      Assert.Equal(0, getResponse.Content.Participants.Count);
+    }
+
+    [Fact]
+    public async Task Should_Send_Not_Found_When_Delete_An_Unexisting_Barbecue_Participant()
+    {
+      // Act
+      var response = await RequestDelete<ValidationErrorResult>(client, $"{BARBECUES}/1/participants/99");
+
+      // Assert
+      Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
   }
 }
