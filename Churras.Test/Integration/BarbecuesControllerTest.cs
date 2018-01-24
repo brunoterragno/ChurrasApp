@@ -76,7 +76,7 @@ namespace Churras.Test.Integration
     {
       // Arrange
       var newBarbecue = new Barbecue("", DateTime.MinValue, "", 0, 0);
-      var expectedValidationErrorResult = GetBarbecueBadRequestValidationErrorResult();
+      var expectedValidationErrorResult = GetBarbecuePostBadRequestValidationErrorResult();
 
       // Act
       var response = await RequestPost<ValidationErrorResult>(client, BARBECUES, newBarbecue);
@@ -90,13 +90,59 @@ namespace Churras.Test.Integration
     public async Task Create_New_Barbecue()
     {
       // Arrange
-      var newBarbecue = GetDefaultBarbecue();
+      var newBarbecue = Mapper.Map<BarbecueDTO>(GetDefaultBarbecue());
 
       // Act
       var response = await RequestPost<BarbecueDTO>(client, BARBECUES, newBarbecue);
 
       // Assert
       Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Edit_An_Existing_Barbecue()
+    {
+      // Arrange
+      var existingBarbecue = Mapper.Map<BarbecueDTO>(GetDefaultBarbecue());
+      existingBarbecue.Title = "Test1";
+      existingBarbecue.Description = "Test2";
+      existingBarbecue.CostWithDrink = 100;
+      existingBarbecue.CostWithoutDrink = 0;
+
+      // Act
+      var response = await RequestPut<BarbecueDTO>(client, $"{BARBECUES}/1", existingBarbecue);
+
+      // Assert
+      Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+      AssertObjectAsJSON(existingBarbecue, response.Content);
+    }
+
+    [Fact]
+    public async Task Edit_An_Existing_With_Invalid_Data_Barbecue()
+    {
+      // Arrange
+      var expectedValidationErrorResult = GetBarbecuePutBadRequestValidationErrorResult();
+      var existingBarbecue = Mapper.Map<BarbecueDTO>(GetDefaultBarbecue());
+      existingBarbecue.Title = null;
+      existingBarbecue.Date = default(DateTime);
+      existingBarbecue.CostWithDrink = -1;
+
+      // Act
+      var response = await RequestPut<ValidationErrorResult>(client, $"{BARBECUES}/1", existingBarbecue);
+
+      // Assert
+      Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+      AssertObjectAsJSON(expectedValidationErrorResult, response.Content);
+    }
+
+    [Fact]
+    public async Task Delete_An_Existing_Barbecue()
+    {
+      // Act
+      var response = await RequestDelete<string>(client, $"{BARBECUES}/1");
+
+      // Assert
+      Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
     }
 
     [Fact]

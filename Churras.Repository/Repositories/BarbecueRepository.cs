@@ -45,5 +45,13 @@ namespace Churras.Repository.Repositories
 
       return barbecue;
     }
+
+    public void Remove(int id)
+    {
+      var barbecue = context.Barbecues.FirstOrDefault(b => b.Id == id);
+      context.Remove(barbecue);
+
+      context.SaveChanges();
+    }
   }
 }

@@ -63,14 +63,24 @@ namespace Churras.Test
       return new Participant(barbecue, name: "Bruno", dough : 10, isGoingToDrink : false);
     }
 
-    public ValidationErrorResult GetBarbecueBadRequestValidationErrorResult()
+    public List<ValidationError> GetBarbecueValidationErrors()
     {
       var expectedValidationError = new List<ValidationError>();
       expectedValidationError.Add(new ValidationError("Date", "'Date' must be greater than or equal to today.", ErrorResultType.invalid_parameter));
       expectedValidationError.Add(new ValidationError("Title", "'Title' should not be empty.", ErrorResultType.invalid_parameter));
       expectedValidationError.Add(new ValidationError("CostWithDrink", "'Cost With Drink' must be greater than '0'.", ErrorResultType.invalid_parameter));
 
-      return new ValidationErrorResult("Error when requesting POST /api/barbecues", expectedValidationError);
+      return expectedValidationError;
+    }
+
+    public ValidationErrorResult GetBarbecuePostBadRequestValidationErrorResult()
+    {
+      return new ValidationErrorResult("Error when requesting POST /api/barbecues", GetBarbecueValidationErrors());
+    }
+
+    public ValidationErrorResult GetBarbecuePutBadRequestValidationErrorResult()
+    {
+      return new ValidationErrorResult("Error when requesting PUT /api/barbecues/1", GetBarbecueValidationErrors());
     }
   }
 }

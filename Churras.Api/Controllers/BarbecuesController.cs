@@ -82,10 +82,25 @@ namespace Churras.Api.Controllers
             return NoContent();
         }
 
-        // [HttpPut("{id}")]
-        // public void Put(int id, [FromBody] string value) { }
+        [HttpPut("{barbecueId}")]
+        public IActionResult Put(int barbecueId, [FromBody] BarbecueDTO editedBarbecue)
+        {
+            var barbecue = barbecueRepository.Save(mapper.Map<Barbecue>(editedBarbecue));
+            return Ok(mapper.Map<BarbecueDTO>(barbecue));
+        }
 
-        // [HttpDelete("{id}")]
-        // public void Delete(int id) { }
+        [HttpDelete("{barbecueId}")]
+        [SwaggerResponse((int) HttpStatusCode.NoContent)]
+        [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult))]
+        public IActionResult Delete(int barbecueId)
+        {
+            var barbecue = barbecueRepository.Get(barbecueId);
+            if (barbecue == null)
+                throw new NotFoundException("Id", "Resource not found", ErrorResultType.not_found);
+
+            barbecueRepository.Remove(barbecueId);
+
+            return NoContent();
+        }
     }
 }

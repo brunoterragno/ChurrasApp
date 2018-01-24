@@ -12,5 +12,7 @@ namespace Churras.Domain.Contracts.Repositories
     Barbecue GetByParticipantId(int participantId);
 
     Barbecue Save(Barbecue barbecue);
+
+    void Remove(int id);
   }
 }
