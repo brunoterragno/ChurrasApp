@@ -36,7 +36,8 @@ namespace Churras.Api.Controllers
 
         [HttpGet("{barbecueId}")]
         [SwaggerResponse((int) HttpStatusCode.OK, typeof(BarbecueDTO))]
-        [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult))]
+        [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
+        [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult), "Barbecue not found")]
         public IActionResult Get(int barbecueId)
         {
             var barbecue = barbecueRepository.Get(barbecueId);
@@ -47,6 +48,8 @@ namespace Churras.Api.Controllers
         }
 
         [HttpPost]
+        [SwaggerResponse((int) HttpStatusCode.Created, typeof(BarbecueDTO))]
+        [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
         public IActionResult Post([FromBody] BarbecueDTO newBarbecue)
         {
             newBarbecue.Id = 0;
@@ -59,6 +62,9 @@ namespace Churras.Api.Controllers
         }
 
         [HttpPut("{barbecueId}")]
+        [SwaggerResponse((int) HttpStatusCode.OK, typeof(BarbecueDTO))]
+        [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
+        [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult), "Barbecue not found")]
         public IActionResult Put(int barbecueId, [FromBody] BarbecueDTO editedBarbecue)
         {
             var barbecue = barbecueRepository.Get(barbecueId);
@@ -77,7 +83,8 @@ namespace Churras.Api.Controllers
 
         [HttpDelete("{barbecueId}")]
         [SwaggerResponse((int) HttpStatusCode.NoContent)]
-        [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult))]
+        [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
+        [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult), "Barbecue not found")]
         public IActionResult Delete(int barbecueId)
         {
             var barbecue = barbecueRepository.Get(barbecueId);
@@ -90,10 +97,16 @@ namespace Churras.Api.Controllers
         }
 
         [HttpPost("{barbecueId}/participants")]
+        [SwaggerResponse((int) HttpStatusCode.Created, typeof(ParticipantDTO))]
+        [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
+        [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult), "Barbecue not found")]
         public IActionResult Post(int barbecueId, [FromBody] ParticipantDTO newParticipant)
         {
             newParticipant.Id = 0;
             var barbecue = barbecueRepository.Get(barbecueId);
+            if (barbecue == null)
+                throw new NotFoundException("barbecueId", "Resource not found", ErrorResultType.not_found);
+
             var participant = mapper.Map<Participant>(newParticipant);
             barbecue.AddParticipant(participant);
             barbecueRepository.Save(barbecue);
@@ -105,6 +118,9 @@ namespace Churras.Api.Controllers
         }
 
         [HttpPut("{barbecueId}/participants/{participantId}")]
+        [SwaggerResponse((int) HttpStatusCode.OK, typeof(ParticipantDTO))]
+        [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
+        [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult), "Barbecue / Participant not found")]
         public IActionResult Put(int barbecueId, int participantId, [FromBody] ParticipantDTO editedParticipant)
         {
             var barbecue = barbecueRepository.Get(barbecueId);
@@ -124,6 +140,9 @@ namespace Churras.Api.Controllers
         }
 
         [HttpDelete("{barbecueId}/participants/{participantId}")]
+        [SwaggerResponse((int) HttpStatusCode.NoContent)]
+        [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
+        [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult), "Participant not found")]
         public IActionResult DeleteParticipant(int barbecueId, int participantId)
         {
             var barbecue = barbecueRepository.Get(barbecueId);
