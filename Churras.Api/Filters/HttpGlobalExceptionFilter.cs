@@ -42,6 +42,8 @@ namespace Churras.Api.Filters
         if (_env.IsDevelopment())
           errorResult.AddDeveloperMessage(context.Exception.Message);
 
+        System.Console.WriteLine(context.Exception.Message);
+
         var objectResult = new InternalServerErrorObjectResult(errorResult);
         this.BuildResponse(context, objectResult);
       }

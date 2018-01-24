@@ -18,7 +18,7 @@ namespace Churras.Domain.DTOs
     public int TotalParticipantsWhoDrink { get; set; }
     public int TotalParticipantsWhoDontDrink { get; set; }
 
-    public List<Participant> Participants { get; set; }
+    public List<ParticipantDTO> Participants { get; set; }
   }
 
   public class BarbecueDTOValidator : AbstractValidator<BarbecueDTO>

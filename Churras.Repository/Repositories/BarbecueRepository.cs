@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Churras.Domain.Contracts.Repositories;
 using Churras.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Churras.Repository.Repositories
 {
@@ -16,18 +17,12 @@ namespace Churras.Repository.Repositories
     }
     public List<Barbecue> Get()
     {
-      return context.Barbecues.ToList();
+      return context.Barbecues.Include(x => x.Participants).ToList();
     }
 
     public Barbecue Get(int id)
     {
-      return context.Barbecues.FirstOrDefault(b => b.Id == id);
-    }
-
-    public Barbecue GetByParticipantId(int participantId)
-    {
-      var barbecue = context.Barbecues.First(x => x.Participants.Any(y => y.Id == participantId));
-      return barbecue;
+      return context.Barbecues.Include(x => x.Participants).FirstOrDefault(b => b.Id == id);
     }
 
     public Barbecue Save(Barbecue barbecue)

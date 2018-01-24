@@ -41,7 +41,7 @@ namespace Churras.Api.Controllers
         {
             var barbecue = barbecueRepository.Get(barbecueId);
             if (barbecue == null)
-                throw new NotFoundException("Id", "Resource not found", ErrorResultType.not_found);
+                throw new NotFoundException("barbecueId", "Resource not found", ErrorResultType.not_found);
 
             return Ok(mapper.Map<BarbecueDTO>(barbecue));
         }
@@ -58,9 +58,42 @@ namespace Churras.Api.Controllers
             );
         }
 
+        [HttpPut("{barbecueId}")]
+        public IActionResult Put(int barbecueId, [FromBody] BarbecueDTO editedBarbecue)
+        {
+            var barbecue = barbecueRepository.Get(barbecueId);
+            if (barbecue == null)
+                throw new NotFoundException("barbecueId", "Resource not found", ErrorResultType.not_found);
+
+            barbecue.ChangeTitle(editedBarbecue.Title);
+            barbecue.ChangeDescription(editedBarbecue.Description);
+            barbecue.ChangeDate(editedBarbecue.Date);
+            barbecue.ChangeCostWithDrink(editedBarbecue.CostWithDrink);
+            barbecue.ChangeCostWithoutDrink(editedBarbecue.CostWithoutDrink);
+            barbecueRepository.Save(barbecue);
+            System.Console.WriteLine(JsonConvert.SerializeObject(barbecue));
+
+            return Ok(mapper.Map<BarbecueDTO>(barbecue));
+        }
+
+        [HttpDelete("{barbecueId}")]
+        [SwaggerResponse((int) HttpStatusCode.NoContent)]
+        [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult))]
+        public IActionResult Delete(int barbecueId)
+        {
+            var barbecue = barbecueRepository.Get(barbecueId);
+            if (barbecue == null)
+                throw new NotFoundException("barbecueId", "Resource not found", ErrorResultType.not_found);
+
+            barbecueRepository.Remove(barbecueId);
+
+            return NoContent();
+        }
+
         [HttpPost("{barbecueId}/participants")]
         public IActionResult Post(int barbecueId, [FromBody] ParticipantDTO newParticipant)
         {
+            newParticipant.Id = 0;
             var barbecue = barbecueRepository.Get(barbecueId);
             var participant = mapper.Map<Participant>(newParticipant);
             barbecue.AddParticipant(participant);
@@ -72,33 +105,35 @@ namespace Churras.Api.Controllers
             );
         }
 
-        [HttpDelete("{barbecueId}/participants/{participantId}")]
-        public IActionResult DeleteParticipant(int participantId)
-        {
-            var barbecue = barbecueRepository.GetByParticipantId(participantId);
-            barbecue.RemoveParticipant(participantId);
-            barbecueRepository.Save(barbecue);
-
-            return NoContent();
-        }
-
-        [HttpPut("{barbecueId}")]
-        public IActionResult Put(int barbecueId, [FromBody] BarbecueDTO editedBarbecue)
-        {
-            var barbecue = barbecueRepository.Save(mapper.Map<Barbecue>(editedBarbecue));
-            return Ok(mapper.Map<BarbecueDTO>(barbecue));
-        }
-
-        [HttpDelete("{barbecueId}")]
-        [SwaggerResponse((int) HttpStatusCode.NoContent)]
-        [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult))]
-        public IActionResult Delete(int barbecueId)
+        [HttpPut("{barbecueId}/participants/{participantId}")]
+        public IActionResult Put(int barbecueId, int participantId, [FromBody] ParticipantDTO editedParticipant)
         {
             var barbecue = barbecueRepository.Get(barbecueId);
             if (barbecue == null)
-                throw new NotFoundException("Id", "Resource not found", ErrorResultType.not_found);
+                throw new NotFoundException("barbecueId", "Resource not found", ErrorResultType.not_found);
 
-            barbecueRepository.Remove(barbecueId);
+            var participant = barbecue.Participants.FirstOrDefault(x => x.Id == participantId);
+            if (participant == null)
+                throw new NotFoundException("participantId", "Resource not found", ErrorResultType.not_found);
+
+            participant.ChangeName(editedParticipant.Name);
+            participant.ChangeIsGoingToDrink(editedParticipant.IsGoingToDrink);
+            participant.ChangeDough(editedParticipant.Dough);
+            barbecueRepository.Save(barbecue);
+
+            return Ok(mapper.Map<ParticipantDTO>(participant));
+        }
+
+        [HttpDelete("{barbecueId}/participants/{participantId}")]
+        public IActionResult DeleteParticipant(int barbecueId, int participantId)
+        {
+            var barbecue = barbecueRepository.Get(barbecueId);
+            var participant = barbecue.Participants.FirstOrDefault(x => x.Id == participantId);
+            if (participant == null)
+                throw new NotFoundException("participantId", "Resource not found", ErrorResultType.not_found);
+
+            barbecue.RemoveParticipant(participantId);
+            barbecueRepository.Save(barbecue);
 
             return NoContent();
         }

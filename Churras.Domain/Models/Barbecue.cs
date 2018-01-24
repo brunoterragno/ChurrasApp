@@ -58,5 +58,20 @@ namespace Churras.Domain.Models
       var participant = this._participants.FirstOrDefault(p => p.Id == participantId);
       this._participants.Remove(participant);
     }
+
+    public void ChangeDescription(string description)
+    {
+      this.Description = description;
+    }
+
+    public void ChangeCostWithDrink(decimal costWithDrink)
+    {
+      this.CostWithDrink = costWithDrink;
+    }
+
+    public void ChangeCostWithoutDrink(decimal costWithoutDrink)
+    {
+      this.CostWithoutDrink = costWithoutDrink;
+    }
   }
 }

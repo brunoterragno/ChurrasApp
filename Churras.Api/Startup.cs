@@ -44,6 +44,11 @@ namespace Churras.Api
                 fvc.RegisterValidatorsFromAssemblyContaining<BarbecueDTO>()
             );
 
+            mvc.AddJsonOptions(
+                options => options.SerializerSettings.ReferenceLoopHandling =
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
             services.AddAutoMapper();
 
             services.AddSwaggerGen(c =>
@@ -69,7 +74,7 @@ namespace Churras.Api
                 System.Console.WriteLine($"DBStrategy: {databaseStrategy}");
             });
 
-            services.AddSingleton<IBarbecueRepository, BarbecueRepository>();
+            services.AddScoped<IBarbecueRepository, BarbecueRepository>();
         }
 
         private void RunMigrationsAndSeed(IApplicationBuilder app)
