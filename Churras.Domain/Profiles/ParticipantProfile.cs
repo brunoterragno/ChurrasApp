@@ -1,12 +1,12 @@
 using AutoMapper;
-using Churras.Domain.DTOs;
+using Churras.Domain.Dtos;
 using Churras.Domain.Models;
 
 public class ParticipantProfile : Profile
 {
   public ParticipantProfile()
   {
-    CreateMap<Participant, ParticipantDTO>();
-    CreateMap<ParticipantDTO, Participant>();
+    CreateMap<Participant, ParticipantDto>();
+    CreateMap<ParticipantDto, Participant>();
   }
 }

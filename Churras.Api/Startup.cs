@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Churras.Api.Filters;
 using Churras.Domain.Contracts.Repositories;
-using Churras.Domain.DTOs;
+using Churras.Domain.Dtos;
 using Churras.Repository;
 using Churras.Repository.Repositories;
 using FluentValidation.AspNetCore;
@@ -41,7 +41,7 @@ namespace Churras.Api
             });
 
             mvc.AddFluentValidation(fvc =>
-                fvc.RegisterValidatorsFromAssemblyContaining<BarbecueDTO>()
+                fvc.RegisterValidatorsFromAssemblyContaining<BarbecueDto>()
             );
 
             mvc.AddJsonOptions(
@@ -105,13 +105,13 @@ namespace Churras.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            this.RunMigrationsAndSeed(app);
+
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Churras API")
             );
-
-            this.RunMigrationsAndSeed(app);
         }
 
         private string GetXmlInfoPath()

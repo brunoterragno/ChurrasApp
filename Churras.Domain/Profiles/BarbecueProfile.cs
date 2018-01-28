@@ -1,12 +1,12 @@
 using AutoMapper;
-using Churras.Domain.DTOs;
+using Churras.Domain.Dtos;
 using Churras.Domain.Models;
 
 public class BarbecueProfile : Profile
 {
   public BarbecueProfile()
   {
-    CreateMap<Barbecue, BarbecueDTO>();
-    CreateMap<BarbecueDTO, Barbecue>();
+    CreateMap<Barbecue, BarbecueDto>();
+    CreateMap<BarbecueDto, Barbecue>();
   }
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Churras.Domain.Models;
 using FluentValidation;
 
-namespace Churras.Domain.DTOs
+namespace Churras.Domain.Dtos
 {
-  public class BarbecueDTO
+  public class BarbecueDto
   {
     public int Id { get; set; }
     public string Title { get; set; }
@@ -18,12 +18,12 @@ namespace Churras.Domain.DTOs
     public int TotalParticipantsWhoDrink { get; set; }
     public int TotalParticipantsWhoDontDrink { get; set; }
 
-    public List<ParticipantDTO> Participants { get; set; }
+    public List<ParticipantDto> Participants { get; set; }
   }
 
-  public class BarbecueDTOValidator : AbstractValidator<BarbecueDTO>
+  public class BarbecueDtoValidator : AbstractValidator<BarbecueDto>
   {
-    public BarbecueDTOValidator()
+    public BarbecueDtoValidator()
     {
       RuleFor(b => b.Title)
         .NotEmpty();

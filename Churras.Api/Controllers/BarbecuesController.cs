@@ -5,7 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Churras.Domain.Contracts.Repositories;
-using Churras.Domain.DTOs;
+using Churras.Domain.Dtos;
 using Churras.Domain.Exceptions;
 using Churras.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -28,44 +28,44 @@ namespace Churras.Api.Controllers
         }
 
         [HttpGet]
-        [SwaggerResponse((int) HttpStatusCode.OK, typeof(BarbecueDTO))]
-        public IActionResult Get()
+        [SwaggerResponse((int) HttpStatusCode.OK, typeof(BarbecueDto))]
+        public IActionResult GetBarbecues()
         {
-            return Ok(mapper.Map<List<BarbecueDTO>>(barbecueRepository.Get()));
+            return Ok(mapper.Map<List<BarbecueDto>>(barbecueRepository.Get()));
         }
 
-        [HttpGet("{barbecueId}")]
-        [SwaggerResponse((int) HttpStatusCode.OK, typeof(BarbecueDTO))]
+        [HttpGet("{barbecueId}", Name = "GetBarbecue")]
+        [SwaggerResponse((int) HttpStatusCode.OK, typeof(BarbecueDto))]
         [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
         [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult), "Barbecue not found")]
-        public IActionResult Get(int barbecueId)
+        public IActionResult GetBarbecue(int barbecueId)
         {
             var barbecue = barbecueRepository.Get(barbecueId);
             if (barbecue == null)
                 throw new NotFoundException("barbecueId", "Resource not found", ErrorResultType.not_found);
 
-            return Ok(mapper.Map<BarbecueDTO>(barbecue));
+            return Ok(mapper.Map<BarbecueDto>(barbecue));
         }
 
         [HttpPost]
-        [SwaggerResponse((int) HttpStatusCode.Created, typeof(BarbecueDTO))]
+        [SwaggerResponse((int) HttpStatusCode.Created, typeof(BarbecueDto))]
         [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
-        public IActionResult Post([FromBody] BarbecueDTO newBarbecue)
+        public IActionResult PostBarbecue([FromBody] BarbecueDto newBarbecue)
         {
             newBarbecue.Id = 0;
             var barbecue = barbecueRepository.Save(mapper.Map<Barbecue>(newBarbecue));
 
-            return Created(
-                $"api/barbecues/{barbecue.Id}",
-                mapper.Map<BarbecueDTO>(barbecue)
+            return CreatedAtRoute("GetBarbecue",
+                new { barbecueId = barbecue.Id },
+                mapper.Map<BarbecueDto>(barbecue)
             );
         }
 
         [HttpPut("{barbecueId}")]
-        [SwaggerResponse((int) HttpStatusCode.OK, typeof(BarbecueDTO))]
+        [SwaggerResponse((int) HttpStatusCode.OK, typeof(BarbecueDto))]
         [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
         [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult), "Barbecue not found")]
-        public IActionResult Put(int barbecueId, [FromBody] BarbecueDTO editedBarbecue)
+        public IActionResult PutBarbecue(int barbecueId, [FromBody] BarbecueDto editedBarbecue)
         {
             var barbecue = barbecueRepository.Get(barbecueId);
             if (barbecue == null)
@@ -78,14 +78,14 @@ namespace Churras.Api.Controllers
             barbecue.ChangeCostWithoutDrink(editedBarbecue.CostWithoutDrink);
             barbecueRepository.Save(barbecue);
 
-            return Ok(mapper.Map<BarbecueDTO>(barbecue));
+            return Ok(mapper.Map<BarbecueDto>(barbecue));
         }
 
         [HttpDelete("{barbecueId}")]
         [SwaggerResponse((int) HttpStatusCode.NoContent)]
         [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
         [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult), "Barbecue not found")]
-        public IActionResult Delete(int barbecueId)
+        public IActionResult DeleteBarbecue(int barbecueId)
         {
             var barbecue = barbecueRepository.Get(barbecueId);
             if (barbecue == null)
@@ -96,11 +96,24 @@ namespace Churras.Api.Controllers
             return NoContent();
         }
 
-        [HttpPost("{barbecueId}/participants")]
-        [SwaggerResponse((int) HttpStatusCode.Created, typeof(ParticipantDTO))]
+        [HttpGet("{barbecueId}/participants", Name = "GetParticipants")]
+        [SwaggerResponse((int) HttpStatusCode.OK, typeof(List<ParticipantDto>))]
         [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
         [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult), "Barbecue not found")]
-        public IActionResult Post(int barbecueId, [FromBody] ParticipantDTO newParticipant)
+        public IActionResult GetParticipants(int barbecueId)
+        {
+            var barbecue = barbecueRepository.Get(barbecueId);
+            if (barbecue == null)
+                throw new NotFoundException("barbecueId", "Resource not found", ErrorResultType.not_found);
+
+            return Ok(mapper.Map<List<ParticipantDto>>(barbecue.Participants));
+        }
+
+        [HttpPost("{barbecueId}/participants")]
+        [SwaggerResponse((int) HttpStatusCode.Created, typeof(ParticipantDto))]
+        [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
+        [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult), "Barbecue not found")]
+        public IActionResult PostParticipant(int barbecueId, [FromBody] ParticipantDto newParticipant)
         {
             newParticipant.Id = 0;
             var barbecue = barbecueRepository.Get(barbecueId);
@@ -111,17 +124,18 @@ namespace Churras.Api.Controllers
             barbecue.AddParticipant(participant);
             barbecueRepository.Save(barbecue);
 
-            return Created(
-                $"api/barbecues/{barbecue.Id}/participants/{participant.Id}",
-                mapper.Map<ParticipantDTO>(participant)
+            return CreatedAtRoute(
+                "GetParticipants",
+                new { barbecueId = barbecue.Id },
+                mapper.Map<ParticipantDto>(participant)
             );
         }
 
         [HttpPut("{barbecueId}/participants/{participantId}")]
-        [SwaggerResponse((int) HttpStatusCode.OK, typeof(ParticipantDTO))]
+        [SwaggerResponse((int) HttpStatusCode.OK, typeof(ParticipantDto))]
         [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
         [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult), "Barbecue / Participant not found")]
-        public IActionResult Put(int barbecueId, int participantId, [FromBody] ParticipantDTO editedParticipant)
+        public IActionResult PutParticipant(int barbecueId, int participantId, [FromBody] ParticipantDto editedParticipant)
         {
             var barbecue = barbecueRepository.Get(barbecueId);
             if (barbecue == null)
@@ -136,7 +150,7 @@ namespace Churras.Api.Controllers
             participant.ChangeDough(editedParticipant.Dough);
             barbecueRepository.Save(barbecue);
 
-            return Ok(mapper.Map<ParticipantDTO>(participant));
+            return Ok(mapper.Map<ParticipantDto>(participant));
         }
 
         [HttpDelete("{barbecueId}/participants/{participantId}")]
