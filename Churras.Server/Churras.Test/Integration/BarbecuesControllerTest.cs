@@ -46,6 +46,29 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
+    public async Task Get_First_Barbecue_Using_Query_String_Pagination()
+    {
+      // Act
+      var response = await RequestGet<List<BarbecueDto>>(client, $"{BARBECUES}?pageSize=1");
+
+      // Assert
+      Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+      Assert.Equal(1, response.Content.Count);
+    }
+
+    [Fact]
+    public async Task Get_Barbecue_Searching_By_Title()
+    {
+      // Act
+      var response = await RequestGet<List<BarbecueDto>>(client, $"{BARBECUES}?title=Churras Carnaval 1");
+
+      // Assert
+      Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+      Assert.Equal(1, response.Content.Count);
+      Assert.Equal("Churras Carnaval 1", response.Content[0].Title);
+    }
+
+    [Fact]
     public async Task Get_Specific_Barbecue()
     {
       // Arrange
