@@ -16,7 +16,7 @@ using static Churras.Api.Utils.MetadataHelpers;
 namespace Churras.Api.Controllers
 {
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/barbecues")]
     public class BarbecuesController : Controller
     {
         IBarbecueRepository barbecueRepository;
@@ -30,8 +30,13 @@ namespace Churras.Api.Controllers
             this.urlHelper = urlHelper;
         }
 
+        /// <remarks>
+        /// Returns X-Pagination Header with JSON Object fields:
+        ///     totalCount, pageSize, currentPage, totalPages, previousPageLink, nextPageLink
+        /// </remarks>
         [HttpGet(Name = "GetBarbecues")]
-        [SwaggerResponse((int) HttpStatusCode.OK, typeof(BarbecueDto))]
+        [SwaggerResponse((int) HttpStatusCode.OK, typeof(List<BarbecueDto>))]
+        [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult), "QueryString with wrong parameters")]
         public IActionResult GetBarbecues([FromQuery] BarbecueResourceFilters filter)
         {
             var barbecues = barbecueRepository.Get(filter);
@@ -81,6 +86,7 @@ namespace Churras.Api.Controllers
             barbecue.ChangeDate(editedBarbecue.Date);
             barbecue.ChangeCostWithDrink(editedBarbecue.CostWithDrink);
             barbecue.ChangeCostWithoutDrink(editedBarbecue.CostWithoutDrink);
+
             barbecueRepository.Save(barbecue);
 
             return Ok(Mapper.Map<BarbecueDto>(barbecue));
@@ -126,6 +132,7 @@ namespace Churras.Api.Controllers
 
             var participant = Mapper.Map<Participant>(newParticipant);
             barbecue.AddParticipant(participant);
+
             barbecueRepository.Save(barbecue);
 
             return CreatedAtRoute(
@@ -152,6 +159,7 @@ namespace Churras.Api.Controllers
             participant.ChangeName(editedParticipant.Name);
             participant.ChangeIsGoingToDrink(editedParticipant.IsGoingToDrink);
             participant.ChangeDough(editedParticipant.Dough);
+
             barbecueRepository.Save(barbecue);
 
             return Ok(Mapper.Map<ParticipantDto>(participant));
@@ -169,6 +177,7 @@ namespace Churras.Api.Controllers
                 throw new NotFoundException("participantId", "Resource not found", ErrorResultType.not_found);
 
             barbecue.RemoveParticipant(participantId);
+
             barbecueRepository.Save(barbecue);
 
             return NoContent();

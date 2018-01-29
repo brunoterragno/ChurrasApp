@@ -53,7 +53,7 @@ namespace Churras.Api.Utils
       return urlHelper.Link("GetBarbecues",
         new
         {
-          title = pagination.Title,
+          searchTerm = pagination.SearchTerm,
             pageNumber = pageNumber,
             pageSize = pagination.PageSize
         });

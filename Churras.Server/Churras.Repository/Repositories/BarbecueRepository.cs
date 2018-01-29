@@ -22,13 +22,12 @@ namespace Churras.Repository.Repositories
         .OrderByDescending(x => x.Date)
         .AsQueryable();
 
-      if (!string.IsNullOrEmpty(filter.Title))
+      if (!string.IsNullOrEmpty(filter.SearchTerm))
       {
-        var titleForWhereClause = filter.Title
-          .Trim().ToLowerInvariant();
+        var titleForWhereClause = filter.SearchTerm.Trim().ToLowerInvariant();
 
         collectionBeforePaging = collectionBeforePaging
-          .Where(b => b.Title.Trim().ToLowerInvariant() == titleForWhereClause);
+          .Where(b => b.Title.Trim().ToLowerInvariant().Contains(titleForWhereClause));
       }
 
       return PagedList<Barbecue>.Create(collectionBeforePaging, filter);

@@ -60,7 +60,7 @@ namespace Churras.Test.Integration
     public async Task Get_Barbecue_Searching_By_Title()
     {
       // Act
-      var response = await RequestGet<List<BarbecueDto>>(client, $"{BARBECUES}?title=Churras Carnaval 1");
+      var response = await RequestGet<List<BarbecueDto>>(client, $"{BARBECUES}?title=1");
 
       // Assert
       Assert.Equal(HttpStatusCode.OK, response.StatusCode);
