@@ -29,9 +29,9 @@ namespace Churras.Api.Controllers
 
         [HttpGet]
         [SwaggerResponse((int) HttpStatusCode.OK, typeof(BarbecueDto))]
-        public IActionResult GetBarbecues()
+        public IActionResult GetBarbecues([FromQuery] Pagination pagination)
         {
-            return Ok(mapper.Map<List<BarbecueDto>>(barbecueRepository.Get()));
+            return Ok(mapper.Map<List<BarbecueDto>>(barbecueRepository.Get(pagination)));
         }
 
         [HttpGet("{barbecueId}", Name = "GetBarbecue")]

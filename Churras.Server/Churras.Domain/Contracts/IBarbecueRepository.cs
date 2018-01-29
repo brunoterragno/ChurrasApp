@@ -5,7 +5,7 @@ namespace Churras.Domain.Contracts.Repositories
 {
   public interface IBarbecueRepository
   {
-    List<Barbecue> Get();
+    List<Barbecue> Get(Pagination pagination);
 
     Barbecue Get(int id);
 

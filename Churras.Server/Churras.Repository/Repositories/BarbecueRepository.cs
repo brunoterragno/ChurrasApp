@@ -15,9 +15,14 @@ namespace Churras.Repository.Repositories
     {
       this.context = context;
     }
-    public List<Barbecue> Get()
+    public List<Barbecue> Get(Pagination pagination)
     {
-      return context.Barbecues.Include(x => x.Participants).ToList();
+      return context.Barbecues
+        .Include(x => x.Participants)
+        .OrderByDescending(x => x.Date)
+        .Skip(pagination.PageSize * (pagination.PageNumber - 1))
+        .Take(pagination.PageSize)
+        .ToList();
     }
 
     public Barbecue Get(int id)
