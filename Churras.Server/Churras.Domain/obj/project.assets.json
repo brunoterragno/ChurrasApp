@@ -12661,11 +12661,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Domain/Churras.Domain.csproj",
+      "projectUniqueName": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Server/Churras.Domain/Churras.Domain.csproj",
       "projectName": "Churras.Domain",
-      "projectPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Domain/Churras.Domain.csproj",
+      "projectPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Server/Churras.Domain/Churras.Domain.csproj",
       "packagesPath": "/Users/brunoterragno/.nuget/packages/",
-      "outputPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Domain/obj/",
+      "outputPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Server/Churras.Domain/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"

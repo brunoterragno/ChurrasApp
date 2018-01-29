@@ -20,18 +20,4 @@ namespace Churras.Domain.Dtos
 
     public List<ParticipantDto> Participants { get; set; }
   }
-
-  public class BarbecueDtoValidator : AbstractValidator<BarbecueDto>
-  {
-    public BarbecueDtoValidator()
-    {
-      RuleFor(b => b.Title)
-        .NotEmpty();
-      RuleFor(b => b.Date)
-        .GreaterThanOrEqualTo(DateTime.Now.Date)
-        .WithMessage("'Date' must be greater than or equal to today.");
-      RuleFor(b => b.CostWithDrink)
-        .GreaterThan(0);
-    }
-  }
 }

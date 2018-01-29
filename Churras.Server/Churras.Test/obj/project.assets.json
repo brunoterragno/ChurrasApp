@@ -13862,11 +13862,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/Churras.Test.csproj",
+      "projectUniqueName": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Server/Churras.Test/Churras.Test.csproj",
       "projectName": "Churras.Test",
-      "projectPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/Churras.Test.csproj",
+      "projectPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Server/Churras.Test/Churras.Test.csproj",
       "packagesPath": "/Users/brunoterragno/.nuget/packages/",
-      "outputPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Test/obj/",
+      "outputPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Server/Churras.Test/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
@@ -13883,11 +13883,11 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "/Users/brunoterragno/Documents/Projects/Churras/Churras.Api/Churras.Api.csproj": {
-              "projectPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Api/Churras.Api.csproj"
+            "/Users/brunoterragno/Documents/Projects/Churras/Churras.Server/Churras.Api/Churras.Api.csproj": {
+              "projectPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Server/Churras.Api/Churras.Api.csproj"
             },
-            "/Users/brunoterragno/Documents/Projects/Churras/Churras.Domain/Churras.Domain.csproj": {
-              "projectPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Domain/Churras.Domain.csproj"
+            "/Users/brunoterragno/Documents/Projects/Churras/Churras.Server/Churras.Domain/Churras.Domain.csproj": {
+              "projectPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Server/Churras.Domain/Churras.Domain.csproj"
             }
           }
         }

@@ -41,7 +41,7 @@ namespace Churras.Api
             });
 
             mvc.AddFluentValidation(fvc =>
-                fvc.RegisterValidatorsFromAssemblyContaining<BarbecueDto>()
+                fvc.RegisterValidatorsFromAssemblyContaining<CreateEditBarbecueDto>()
             );
 
             mvc.AddJsonOptions(

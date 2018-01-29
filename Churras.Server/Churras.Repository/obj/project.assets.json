@@ -12680,11 +12680,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Repository/Churras.Repository.csproj",
+      "projectUniqueName": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Server/Churras.Repository/Churras.Repository.csproj",
       "projectName": "Churras.Repository",
-      "projectPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Repository/Churras.Repository.csproj",
+      "projectPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Server/Churras.Repository/Churras.Repository.csproj",
       "packagesPath": "/Users/brunoterragno/.nuget/packages/",
-      "outputPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Repository/obj/",
+      "outputPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Server/Churras.Repository/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
@@ -12701,8 +12701,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "/Users/brunoterragno/Documents/Projects/Churras/Churras.Domain/Churras.Domain.csproj": {
-              "projectPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Domain/Churras.Domain.csproj"
+            "/Users/brunoterragno/Documents/Projects/Churras/Churras.Server/Churras.Domain/Churras.Domain.csproj": {
+              "projectPath": "/Users/brunoterragno/Documents/Projects/Churras/Churras.Server/Churras.Domain/Churras.Domain.csproj"
             }
           }
         }

@@ -30,7 +30,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Get_All_Barbecues()
+    public async Task Get_All_Barbecues()
     {
       // Arrange
       var expectedBarbecues = Mapper.Map<List<BarbecueDto>>(GetAllDefaultBarbecues());
@@ -45,7 +45,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Get_Specific_Barbecue()
+    public async Task Get_Specific_Barbecue()
     {
       // Arrange
       var expectedBarbecue = Mapper.Map<BarbecueDto>(GetDefaultBarbecue());
@@ -59,7 +59,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Get_All_Participants_From_A_Specific_Barbecue()
+    public async Task Get_All_Participants_From_A_Specific_Barbecue()
     {
       // Arrange
       var expectedBarbecue = Mapper.Map<BarbecueDto>(GetDefaultBarbecue());
@@ -73,7 +73,21 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Send_Not_Found_When_Specific_Barbecue_Not_Exist()
+    public async Task Send_Not_Found_When_Get_All_Participants_From_An_Unexisting_Barbecue()
+    {
+      // Arrange
+      var expectedBarbecue = Mapper.Map<BarbecueDto>(GetDefaultBarbecue());
+
+      // Act
+      var response = await RequestGet<List<ParticipantDto>>(client, $"{BARBECUES}/1/participants");
+
+      // Assert
+      Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+      AssertObjectAsJSON(expectedBarbecue.Participants, response.Content);
+    }
+
+    [Fact]
+    public async Task Send_Not_Found_When_Specific_Barbecue_Not_Exist()
     {
       // Arrange
       var expectedBarbecue = GetDefaultBarbecue();
@@ -86,7 +100,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Send_Bad_Request_When_Send_Invalid_Data()
+    public async Task Send_Bad_Request_When_Send_Invalid_Data()
     {
       // Arrange
       var newBarbecue = new Barbecue("", DateTime.MinValue, "", 0, 0);
@@ -101,10 +115,10 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Create_New_Barbecue()
+    public async Task Create_New_Barbecue()
     {
       // Arrange
-      var newBarbecue = Mapper.Map<BarbecueDto>(GetDefaultBarbecue());
+      var newBarbecue = Mapper.Map<CreateEditBarbecueDto>(GetDefaultBarbecue());
 
       // Act
       var response = await RequestPost<BarbecueDto>(client, BARBECUES, newBarbecue);
@@ -114,7 +128,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Edit_An_Existing_Barbecue()
+    public async Task Edit_An_Existing_Barbecue()
     {
       // Arrange
       var existingBarbecue = Mapper.Map<BarbecueDto>(GetDefaultBarbecue());
@@ -132,11 +146,11 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Not_Edit_An_Existing_Barbecue_With_Invalid_Data()
+    public async Task Not_Edit_An_Existing_Barbecue_With_Invalid_Data()
     {
       // Arrange
       var expectedValidationErrorResult = GetBarbecuePutBadRequestValidationErrorResult();
-      var existingBarbecue = Mapper.Map<BarbecueDto>(GetDefaultBarbecue());
+      var existingBarbecue = Mapper.Map<CreateEditBarbecueDto>(GetDefaultBarbecue());
       existingBarbecue.Title = null;
       existingBarbecue.Date = default(DateTime);
       existingBarbecue.CostWithDrink = -1;
@@ -150,7 +164,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Delete_An_Existing_Barbecue()
+    public async Task Delete_An_Existing_Barbecue()
     {
       // Act
       var deleteResponse = await RequestDelete<string>(client, $"{BARBECUES}/1");
@@ -162,7 +176,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Send_Not_Found_When_Delete_An_Unexisting_Barbecue()
+    public async Task Send_Not_Found_When_Delete_An_Unexisting_Barbecue()
     {
       // Act
       var response = await RequestDelete<ValidationErrorResult>(client, $"{BARBECUES}/99");
@@ -172,7 +186,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Add_Barbecue_Participant()
+    public async Task Create_Barbecue_Participant()
     {
       // Arrange
       var barbecue = GetDefaultBarbecue();
@@ -188,7 +202,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Not_Add_Barbecue_Participant_With_Wrong_Data()
+    public async Task Not_Add_Barbecue_Participant_With_Wrong_Data()
     {
       // Arrange
       var expectedValidationErrorResult = GetParticipantPostBadRequestValidationErrorResult();
@@ -205,7 +219,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Edit_An_Existing_Barbecue_Participant()
+    public async Task Edit_An_Existing_Barbecue_Participant()
     {
       // Arrange
       var barbecue = GetDefaultBarbecue();
@@ -224,7 +238,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Not_Edit_An_Existing_Barbecue_Participant_With_Invalid_Data()
+    public async Task Not_Edit_An_Existing_Barbecue_Participant_With_Invalid_Data()
     {
       // Arrange
       var expectedValidationErrorResult = GetParticipantPutBadRequestValidationErrorResult();
@@ -242,7 +256,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Delete_Barbecue_Participant()
+    public async Task Delete_Barbecue_Participant()
     {
       // Act
       var deleteResponse = await RequestDelete<string>(client, $"{BARBECUES}/2/participants/1");
@@ -254,7 +268,7 @@ namespace Churras.Test.Integration
     }
 
     [Fact]
-    public async Task Should_Send_Not_Found_When_Delete_An_Unexisting_Barbecue_Participant()
+    public async Task Send_Not_Found_When_Delete_An_Unexisting_Barbecue_Participant()
     {
       // Act
       var response = await RequestDelete<ValidationErrorResult>(client, $"{BARBECUES}/1/participants/99");

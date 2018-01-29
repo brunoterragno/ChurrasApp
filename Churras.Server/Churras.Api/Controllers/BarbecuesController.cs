@@ -50,9 +50,8 @@ namespace Churras.Api.Controllers
         [HttpPost]
         [SwaggerResponse((int) HttpStatusCode.Created, typeof(BarbecueDto))]
         [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
-        public IActionResult PostBarbecue([FromBody] BarbecueDto newBarbecue)
+        public IActionResult PostBarbecue([FromBody] CreateEditBarbecueDto newBarbecue)
         {
-            newBarbecue.Id = 0;
             var barbecue = barbecueRepository.Save(mapper.Map<Barbecue>(newBarbecue));
 
             return CreatedAtRoute("GetBarbecue",
@@ -65,7 +64,7 @@ namespace Churras.Api.Controllers
         [SwaggerResponse((int) HttpStatusCode.OK, typeof(BarbecueDto))]
         [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
         [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult), "Barbecue not found")]
-        public IActionResult PutBarbecue(int barbecueId, [FromBody] BarbecueDto editedBarbecue)
+        public IActionResult PutBarbecue(int barbecueId, [FromBody] CreateEditBarbecueDto editedBarbecue)
         {
             var barbecue = barbecueRepository.Get(barbecueId);
             if (barbecue == null)
@@ -113,9 +112,8 @@ namespace Churras.Api.Controllers
         [SwaggerResponse((int) HttpStatusCode.Created, typeof(ParticipantDto))]
         [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
         [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult), "Barbecue not found")]
-        public IActionResult PostParticipant(int barbecueId, [FromBody] ParticipantDto newParticipant)
+        public IActionResult PostParticipant(int barbecueId, [FromBody] CreateEditParticipantDto newParticipant)
         {
-            newParticipant.Id = 0;
             var barbecue = barbecueRepository.Get(barbecueId);
             if (barbecue == null)
                 throw new NotFoundException("barbecueId", "Resource not found", ErrorResultType.not_found);
@@ -135,7 +133,7 @@ namespace Churras.Api.Controllers
         [SwaggerResponse((int) HttpStatusCode.OK, typeof(ParticipantDto))]
         [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
         [SwaggerResponse((int) HttpStatusCode.NotFound, typeof(ValidationErrorResult), "Barbecue / Participant not found")]
-        public IActionResult PutParticipant(int barbecueId, int participantId, [FromBody] ParticipantDto editedParticipant)
+        public IActionResult PutParticipant(int barbecueId, int participantId, [FromBody] CreateEditParticipantDto editedParticipant)
         {
             var barbecue = barbecueRepository.Get(barbecueId);
             if (barbecue == null)

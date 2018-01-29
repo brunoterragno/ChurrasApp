@@ -18,7 +18,10 @@ namespace Churras.Api.Filters
 
     private readonly ILogger<HttpGlobalExceptionFilter> _logger;
 
-    public HttpGlobalExceptionFilter(IHostingEnvironment env, ILogger<HttpGlobalExceptionFilter> logger)
+    public HttpGlobalExceptionFilter(
+      IHostingEnvironment env,
+      ILogger<HttpGlobalExceptionFilter> logger
+    )
     {
       this._env = env;
       this._logger = logger;

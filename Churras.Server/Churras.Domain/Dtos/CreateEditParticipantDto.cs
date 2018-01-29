@@ -5,11 +5,19 @@ using FluentValidation;
 
 namespace Churras.Domain.Dtos
 {
-  public class ParticipantDto
+  public class CreateEditParticipantDto
   {
-    public int Id { get; set; }
     public string Name { get; set; }
     public decimal Dough { get; set; }
     public bool IsGoingToDrink { get; set; }
+  }
+
+  public class CreateEditParticipantDtoValidator : AbstractValidator<CreateEditParticipantDto>
+  {
+    public CreateEditParticipantDtoValidator()
+    {
+      RuleFor(b => b.Name)
+        .NotEmpty();
+    }
   }
 }
