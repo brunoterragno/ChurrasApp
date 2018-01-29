@@ -5,10 +5,10 @@
 Project structure
 
 Churras.Server  
-├── Churras.Api  
-├── Churras.Domain  
-├── Churras.Repository  
-└── Churras.Test   
+|-- Churras.Api  
+|-- Churras.Domain  
+|-- Churras.Repository  
+`-- Churras.Test 
 
 ASP.NET Core 2.0 API made with:
 
