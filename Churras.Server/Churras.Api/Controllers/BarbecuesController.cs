@@ -11,6 +11,7 @@ using Churras.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using static Churras.Api.Utils.MetadataHelpers;
 
 namespace Churras.Api.Controllers
 {
@@ -18,20 +19,25 @@ namespace Churras.Api.Controllers
     [Route("api/[controller]")]
     public class BarbecuesController : Controller
     {
-        IMapper mapper;
         IBarbecueRepository barbecueRepository;
+        IUrlHelper urlHelper;
 
-        public BarbecuesController(IMapper mapper, IBarbecueRepository barbecueRepository)
+        public BarbecuesController(
+            IBarbecueRepository barbecueRepository,
+            IUrlHelper urlHelper)
         {
-            this.mapper = mapper;
             this.barbecueRepository = barbecueRepository;
+            this.urlHelper = urlHelper;
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetBarbecues")]
         [SwaggerResponse((int) HttpStatusCode.OK, typeof(BarbecueDto))]
-        public IActionResult GetBarbecues([FromQuery] Pagination pagination)
+        public IActionResult GetBarbecues([FromQuery] BarbecueResourceFilters filter)
         {
-            return Ok(mapper.Map<List<BarbecueDto>>(barbecueRepository.Get(pagination)));
+            var barbecues = barbecueRepository.Get(filter);
+            AddPaginationMetadataHeader(urlHelper, Response, barbecues, filter);
+
+            return Ok(Mapper.Map<List<BarbecueDto>>(barbecues));
         }
 
         [HttpGet("{barbecueId}", Name = "GetBarbecue")]
@@ -44,7 +50,7 @@ namespace Churras.Api.Controllers
             if (barbecue == null)
                 throw new NotFoundException("barbecueId", "Resource not found", ErrorResultType.not_found);
 
-            return Ok(mapper.Map<BarbecueDto>(barbecue));
+            return Ok(Mapper.Map<BarbecueDto>(barbecue));
         }
 
         [HttpPost]
@@ -52,11 +58,11 @@ namespace Churras.Api.Controllers
         [SwaggerResponse((int) HttpStatusCode.BadRequest, typeof(ValidationErrorResult))]
         public IActionResult PostBarbecue([FromBody] CreateEditBarbecueDto newBarbecue)
         {
-            var barbecue = barbecueRepository.Save(mapper.Map<Barbecue>(newBarbecue));
+            var barbecue = barbecueRepository.Save(Mapper.Map<Barbecue>(newBarbecue));
 
             return CreatedAtRoute("GetBarbecue",
                 new { barbecueId = barbecue.Id },
-                mapper.Map<BarbecueDto>(barbecue)
+                Mapper.Map<BarbecueDto>(barbecue)
             );
         }
 
@@ -77,7 +83,7 @@ namespace Churras.Api.Controllers
             barbecue.ChangeCostWithoutDrink(editedBarbecue.CostWithoutDrink);
             barbecueRepository.Save(barbecue);
 
-            return Ok(mapper.Map<BarbecueDto>(barbecue));
+            return Ok(Mapper.Map<BarbecueDto>(barbecue));
         }
 
         [HttpDelete("{barbecueId}")]
@@ -105,7 +111,7 @@ namespace Churras.Api.Controllers
             if (barbecue == null)
                 throw new NotFoundException("barbecueId", "Resource not found", ErrorResultType.not_found);
 
-            return Ok(mapper.Map<List<ParticipantDto>>(barbecue.Participants));
+            return Ok(Mapper.Map<List<ParticipantDto>>(barbecue.Participants));
         }
 
         [HttpPost("{barbecueId}/participants")]
@@ -118,14 +124,14 @@ namespace Churras.Api.Controllers
             if (barbecue == null)
                 throw new NotFoundException("barbecueId", "Resource not found", ErrorResultType.not_found);
 
-            var participant = mapper.Map<Participant>(newParticipant);
+            var participant = Mapper.Map<Participant>(newParticipant);
             barbecue.AddParticipant(participant);
             barbecueRepository.Save(barbecue);
 
             return CreatedAtRoute(
                 "GetParticipants",
                 new { barbecueId = barbecue.Id },
-                mapper.Map<ParticipantDto>(participant)
+                Mapper.Map<ParticipantDto>(participant)
             );
         }
 
@@ -148,7 +154,7 @@ namespace Churras.Api.Controllers
             participant.ChangeDough(editedParticipant.Dough);
             barbecueRepository.Save(barbecue);
 
-            return Ok(mapper.Map<ParticipantDto>(participant));
+            return Ok(Mapper.Map<ParticipantDto>(participant));
         }
 
         [HttpDelete("{barbecueId}/participants/{participantId}")]

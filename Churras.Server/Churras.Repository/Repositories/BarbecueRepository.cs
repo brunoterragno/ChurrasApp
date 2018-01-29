@@ -15,14 +15,23 @@ namespace Churras.Repository.Repositories
     {
       this.context = context;
     }
-    public List<Barbecue> Get(Pagination pagination)
+    public PagedList<Barbecue> Get(BarbecueResourceFilters filter)
     {
-      return context.Barbecues
+      var collectionBeforePaging = context.Barbecues
         .Include(x => x.Participants)
         .OrderByDescending(x => x.Date)
-        .Skip(pagination.PageSize * (pagination.PageNumber - 1))
-        .Take(pagination.PageSize)
-        .ToList();
+        .AsQueryable();
+
+      if (!string.IsNullOrEmpty(filter.Title))
+      {
+        var titleForWhereClause = filter.Title
+          .Trim().ToLowerInvariant();
+
+        collectionBeforePaging = collectionBeforePaging
+          .Where(b => b.Title.Trim().ToLowerInvariant() == titleForWhereClause);
+      }
+
+      return PagedList<Barbecue>.Create(collectionBeforePaging, filter);
     }
 
     public Barbecue Get(int id)
