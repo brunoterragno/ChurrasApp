@@ -10,6 +10,17 @@ Churras.Server
 |-- Churras.Repository  
 `-- Churras.Test 
 
+### Build setup
+
+``` bash
+# install dependencies
+dotnet restore
+
+# run api app
+dotnet run
+
+```
+
 ASP.NET Core 2.0 API made with:
 
 - EntityFramework 6
@@ -60,7 +71,7 @@ https://churrasapi.azurewebsites.net/swagger
 > TODO
 > Churras Web Project
 
-## Build Setup
+### Build Setup
 
 ``` bash
 # install dependencies
