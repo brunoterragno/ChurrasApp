@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Churras.Api.Filters;
 using Churras.Domain.Contracts.Repositories;
@@ -22,6 +18,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Churras.Api
 {
@@ -51,6 +51,8 @@ namespace Churras.Api
                 options => options.SerializerSettings.ReferenceLoopHandling =
                 Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
+            services.AddCors();
 
             services.AddAutoMapper();
 
@@ -117,6 +119,13 @@ namespace Churras.Api
             }
 
             this.RunMigrationsAndSeed(app);
+
+            app.UseCors(options =>
+                options
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+            );
 
             app.UseMvc();
             app.UseSwagger();
