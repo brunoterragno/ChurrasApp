@@ -10,18 +10,18 @@
 </template>
 
 <script>
-import Card from '@/components/Card'
+import Card from "@/components/Card";
 
 export default {
   components: {
-    'card': Card
+    card: Card
   },
-  data () {
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+      msg: "Welcome to Your Vue.js App"
+    };
   }
-}
+};
 </script>
 
 <style scoped>

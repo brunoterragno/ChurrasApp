@@ -1,15 +1,15 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import MainList from '@/components/MainList'
+import Vue from "vue";
+import Router from "vue-router";
+import MainList from "@/components/MainList";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'MainList',
+      path: "/",
+      name: "MainList",
       component: MainList
     }
   ]
-})
+});
