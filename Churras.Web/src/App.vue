@@ -1,21 +1,22 @@
 <template>
-  <v-app dark>
-    <v-toolbar fixed app>
-      <v-toolbar-title>Churras!</v-toolbar-title>
-    </v-toolbar>
-    <v-content>
-      <v-container fluid>
-        <router-view></router-view>
-      </v-container>
-    </v-content>
-    <v-footer app>
-      <span class="white--text">brunoterragno &copy; 2017</span>
-    </v-footer>
-  </v-app>
+<div>
+  <top-header/>
+  <main>
+    <router-view></router-view>
+  </main>
+  <bottom-footer/>
+</div>
 </template>
 
 <script>
+import topHeader from "@/components/Header";
+import bottomFooter from "@/components/Footer";
+
 export default {
+  components: {
+    topHeader,
+    bottomFooter
+  },
   name: "App"
 };
 </script>
@@ -29,4 +30,9 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+/* 
+
+https://coolors.co/223746-087e8b-c0e0ea-ff5a5f-e3d26f
+
+ */
 </style>

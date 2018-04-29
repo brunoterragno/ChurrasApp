@@ -2,7 +2,7 @@ import axios from "axios";
 
 const contentType = "application/json";
 
-axios.defaults.baseURL = "http://localhost:5000/api/";
+axios.defaults.baseURL = "https://churrasapi.azurewebsites.net/api/";
 axios.defaults.headers.post["Content-Type"] = contentType;
 axios.defaults.headers.put["Content-Type"] = contentType;
 
