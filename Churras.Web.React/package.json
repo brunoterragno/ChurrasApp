@@ -15,20 +15,33 @@
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-immutable": "^4.0.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "styled-components": "^3.2.6"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "cypress:open": "cypress open"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.4.5",
+    "@storybook/addon-links": "^3.4.5",
+    "@storybook/addons": "^3.4.5",
+    "@storybook/react": "^3.4.5",
+    "babel-core": "^6.26.3",
+    "babel-runtime": "^6.26.0",
+    "cypress": "^2.1.0",
     "eslint": "^4.17.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.6.1"
+    "eslint-plugin-react": "^7.6.1",
+    "typescript": "^2.8.3",
+    "typescript-styled-plugin": "^0.6.3"
   }
 }

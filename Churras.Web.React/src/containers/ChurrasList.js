@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Header from '../components/Header';
+import Container from '../components/Container';
 
 class ChurrasList extends Component {
-  componentDidMount() {}
   render() {
-    return <div>Lista de churrascos</div>;
+    return (
+      <Container>
+        <Header>Churras App</Header>
+      </Container>
+    );
   }
 }
 

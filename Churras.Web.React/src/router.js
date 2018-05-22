@@ -5,8 +5,8 @@ import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter } from 'react-router-redux';
 
 import App from './App';
-import ChurrasList from './components/ChurrasList';
-import AddEditChurras from './components/AddEditChurras';
+import ChurrasList from './containers/ChurrasList';
+import AddEditChurras from './containers/AddEditChurras';
 
 export const history = createHistory();
 
