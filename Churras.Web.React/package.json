@@ -35,6 +35,8 @@
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
     "cypress": "^2.1.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.17.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
