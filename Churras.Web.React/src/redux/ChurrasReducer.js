@@ -12,11 +12,15 @@ const CHURRAS_UPDATE = 'churras.web.react/churras/UPDATE';
 const CHURRAS_DELETE = 'churras.web.react/churras/REMOVE';
 
 // Reducer
-const INITIAL_STATE = Map({});
+const INITIAL_STATE = Map({
+  items: []
+});
 
 export default (state = INITIAL_STATE, action = {}) => {
   switch (action.type) {
     // do reducer stuff
+    case CHURRAS_LOAD:
+      return state.set('items', action.payload);
     default:
       return state;
   }
@@ -56,6 +60,6 @@ export const deleteChurras = () => dispatch => {
 export const getChurras = () => dispatch => {
   axios
     .get(`${API_URL}/barbecues?PageNumber=1&PageSize=20`)
-    .then(res => loadChurras(res.data))
+    .then(res => dispatch(loadChurras(res.data)))
     .catch(err => console.log(err));
 };

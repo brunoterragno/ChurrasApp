@@ -1,17 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Head = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px 30px;
-  background-color: #f4f4f5;
-  border: 1px solid #666;
-
-  &:hover {
-    background-color: fuchsia;
-  }
+  border: 1px solid red;
 `;
 
-export default props => <Head>{props.children}</Head>;
+export default props => (
+  <Head>
+    <header>
+      <h1>Churras App</h1>
+      <nav>
+        <Link to="/">Lista de churras</Link> |
+        <Link to="/AddEditChurras">Adicionar churras</Link>
+      </nav>
+    </header>
+  </Head>
+);
