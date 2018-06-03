@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import Header from './components/Header';
+import Container from './components/Container';
 
 class App extends Component {
   constructor(props) {
@@ -8,7 +10,12 @@ class App extends Component {
     document.title = 'Churras App!';
   }
   render() {
-    return <div>{this.props.children}</div>;
+    return (
+      <Container>
+        <Header>Churras App</Header>
+        {this.props.children}
+      </Container>
+    );
   }
 }
 

@@ -63,3 +63,10 @@ export const getChurras = () => dispatch => {
     .then(res => dispatch(loadChurras(res.data)))
     .catch(err => console.log(err));
 };
+
+export const postChurras = churras => dispatch => {
+  axios
+    .post(`${API_URL}/barbecues`, JSON.stringify(churras))
+    .then(res => dispatch(createChurras(res.data)))
+    .catch(err => console.log(err));
+};

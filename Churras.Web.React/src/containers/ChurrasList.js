@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
-import Container from '../components/Container';
 import CardList from '../components/CardList';
 import { getChurras } from '../redux/ChurrasReducer';
 
@@ -11,12 +9,7 @@ class ChurrasList extends Component {
     this.props.getChurras();
   }
   render() {
-    return (
-      <Container>
-        <Header>Churras App</Header>
-        <CardList items={this.props.items} />
-      </Container>
-    );
+    return <CardList items={this.props.items} />;
   }
 }
 

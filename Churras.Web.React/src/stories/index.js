@@ -3,16 +3,19 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
+import { MemoryRouter } from 'react-router';
 
 import Header from '../components/Header';
 import PageButton from '../components/PageButton';
 import Card from '../components/Card';
 import CardList from '../components/CardList';
+import Input from '../components/Input';
 
 storiesOf('Header', module)
-  .add('without text', () => <Header />)
-  .add('with text', () => <Header>Some text</Header>)
-  .add('with some emoji', () => <Header>😀 </Header>);
+  .addDecorator(story => (
+    <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
+  ))
+  .add('without text', () => <Header />);
 
 storiesOf('PageButton', module)
   .add('without text', () => <PageButton />)
@@ -70,3 +73,9 @@ const items = [
 storiesOf('CardList', module)
   .add('without items', () => <CardList />)
   .add('with items', () => <CardList items={items.concat(items)} />);
+
+storiesOf('Input', module)
+  .add('without values', () => <Input />)
+  .add('with label and placeholder', () => (
+    <Input placeholder="Insira seu nome" label="Nome" />
+  ));
