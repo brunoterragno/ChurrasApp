@@ -66,7 +66,7 @@ export const getChurras = () => dispatch => {
 
 export const postChurras = churras => dispatch => {
   axios
-    .post(`${API_URL}/barbecues`, JSON.stringify(churras))
+    .post(`${API_URL}/barbecues`, JSON.stringify({ churras }))
     .then(res => dispatch(createChurras(res.data)))
     .catch(err => console.log(err));
 };
