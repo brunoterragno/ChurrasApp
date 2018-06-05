@@ -72,6 +72,7 @@ const items = [
 
 storiesOf('CardList', module)
   .add('without items', () => <CardList />)
+  .add('with loading', () => <CardList loading={true} />)
   .add('with items', () => <CardList items={items.concat(items)} />);
 
 storiesOf('Input', module)
