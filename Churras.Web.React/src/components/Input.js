@@ -15,7 +15,7 @@ const Input = styled.fieldset`
 export default ({ type, placeholder, label }) => (
   <Input>
     <label>{label}</label>
-    {type == 'longtext' ? (
+    {type === 'longtext' ? (
       <textarea placeholder={placeholder} />
     ) : (
       <input type={type} placeholder={placeholder} />

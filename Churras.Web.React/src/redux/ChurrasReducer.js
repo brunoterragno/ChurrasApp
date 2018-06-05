@@ -23,6 +23,8 @@ export default (state = INITIAL_STATE, action = {}) => {
       return state.set('loading', true);
     case CHURRAS_LOAD_SUCCESS:
       return state.set('loading', false).set('items', action.payload);
+    case CHURRAS_LOAD_FAIL:
+      return state.set('loading', false).set('items', []);
     default:
       return state;
   }
