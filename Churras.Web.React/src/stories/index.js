@@ -77,6 +77,19 @@ storiesOf('CardList', module)
 
 storiesOf('Input', module)
   .add('without values', () => <Input />)
-  .add('with label and placeholder', () => (
-    <Input placeholder="Insira seu nome" label="Nome" />
+  .add('with label and placeholder and type text', () => (
+    <Input type="text" placeholder="Insira seu nome" label="Nome" />
+  ))
+  .add('with label and placeholder and type date', () => (
+    <Input type="date" placeholder="Insira a data" label="Data" />
+  ))
+  .add('with label and placeholder and type textarea', () => (
+    <Input
+      type="longtext"
+      placeholder="Insira a descrição"
+      label="Texto longo"
+    />
+  ))
+  .add('with label and placeholder and type money', () => (
+    <Input type="money" placeholder="Insira o dinheiro" label="Money" />
   ));
