@@ -20,16 +20,24 @@ export default (state = INITIAL_STATE, action = {}) => {
   switch (action.type) {
     // do reducer stuff
     case CHURRAS_LOAD:
-      return state.set('items', action.payload);
+      return state.set('loading', true);
+    case CHURRAS_LOAD_SUCCESS:
+      return state.set('loading', false).set('items', action.payload);
     default:
       return state;
   }
 };
 
 // Action Creators
-export const loadChurras = churras => dispatch => {
+export const loadChurras = () => dispatch => {
   dispatch({
-    type: CHURRAS_LOAD,
+    type: CHURRAS_LOAD
+  });
+};
+
+export const loadChurrasSuccess = churras => dispatch => {
+  dispatch({
+    type: CHURRAS_LOAD_SUCCESS,
     payload: churras
   });
 };
@@ -58,9 +66,10 @@ export const deleteChurras = () => dispatch => {
 // side effects, only as applicable
 // e.g. thunks, epics, etc
 export const getChurras = () => dispatch => {
+  dispatch(loadChurras());
   axios
     .get(`${API_URL}/barbecues?PageNumber=1&PageSize=20`)
-    .then(res => dispatch(loadChurras(res.data)))
+    .then(res => dispatch(loadChurrasSuccess(res.data)))
     .catch(err => console.log(err));
 };
 

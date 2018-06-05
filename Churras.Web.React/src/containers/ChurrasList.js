@@ -9,12 +9,13 @@ class ChurrasList extends Component {
     this.props.getChurras();
   }
   render() {
-    return <CardList items={this.props.items} />;
+    return <CardList loading={this.props.loading} items={this.props.items} />;
   }
 }
 
 const mapStateToProps = state => {
   return {
+    loading: state.get('churras').get('loading'),
     items: state.get('churras').get('items')
   };
 };
