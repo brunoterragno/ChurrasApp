@@ -21,4 +21,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = { getChurras };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChurrasList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ChurrasList);

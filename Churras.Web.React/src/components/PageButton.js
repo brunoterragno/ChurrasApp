@@ -12,4 +12,6 @@ const Button = styled.button`
   }
 `;
 
-export default ({ text }) => <Button>{text || 'Button'}</Button>;
+export default ({ text, onClick }) => (
+  <Button onClick={onClick}>{text || 'Button'}</Button>
+);

@@ -1,1 +1,1 @@
-export const API_URL = 'https://churrasapi.azurewebsites.net/api';
+export const API_URL = 'https://churrasapi.azurewebsites.net/api/';
