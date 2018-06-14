@@ -10,9 +10,13 @@ const Input = styled.fieldset`
     padding: 5px;
     min-width: 200px;
   }
+
+  span {
+    color: red;
+  }
 `;
 
-export default ({ type, placeholder, label }) => (
+export default ({ type, placeholder, label, errorMessage }) => (
   <Input>
     <label>{label}</label>
     {type === 'longtext' ? (
@@ -20,5 +24,6 @@ export default ({ type, placeholder, label }) => (
     ) : (
       <input type={type} placeholder={placeholder} />
     )}
+    {errorMessage && <span>{errorMessage}</span>}
   </Input>
 );

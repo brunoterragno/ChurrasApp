@@ -92,4 +92,12 @@ storiesOf('Input', module)
   ))
   .add('with label and placeholder and type money', () => (
     <Input type="money" placeholder="Insira o dinheiro" label="Money" />
+  ))
+  .add('with label and placeholder and error message', () => (
+    <Input
+      type="money"
+      placeholder="Insira o dinheiro"
+      label="Money"
+      errorMessage="Você deve informar o dinheiro"
+    />
   ));

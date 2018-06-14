@@ -19,11 +19,16 @@ namespace Churras.Domain.Dtos
     public CreateEditBarbecueDtoValidator()
     {
       RuleFor(b => b.Title)
-        .NotEmpty();
+        .NotEmpty()
+        .NotNull();
       RuleFor(b => b.Date)
+        .NotEmpty()
+        .NotNull()
         .GreaterThanOrEqualTo(DateTime.Now.Date)
         .WithMessage("'Date' must be greater than or equal to today.");
       RuleFor(b => b.CostWithDrink)
+        .NotEmpty()
+        .NotNull()
         .GreaterThan(0);
     }
   }

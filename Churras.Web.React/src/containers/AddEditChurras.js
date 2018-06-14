@@ -6,11 +6,31 @@ import PageButton from '../components/PageButton';
 
 const AddEditChurras = ({ newItem, postChurras }) => (
   <div>
-    <Input placeholder="Nome do evento" label="Título" />
-    <Input placeholder="Dia que vai rolar" label="Data" />
-    <Input placeholder="Descrição do evento" label="Descrição" />
-    <Input placeholder="Dinheiro aqui" label="Grana com Drinks" />
-    <Input placeholder="Dinheiro aqui" label="Grana sem Drinks" />
+    <Input
+      placeholder="Nome do evento"
+      label="Título"
+      errorMessage={newItem.title.error}
+    />
+    <Input
+      placeholder="Dia que vai rolar"
+      label="Data"
+      errorMessage={newItem.date.error}
+    />
+    <Input
+      placeholder="Descrição do evento"
+      label="Descrição"
+      errorMessage={newItem.description.error}
+    />
+    <Input
+      placeholder="Dinheiro aqui"
+      label="Grana com Drinks"
+      errorMessage={newItem.costWithDrink.error}
+    />
+    <Input
+      placeholder="Dinheiro aqui"
+      label="Grana sem Drinks"
+      errorMessage={newItem.costWithoutDrink.error}
+    />
     <PageButton text="Adicionar" onClick={() => postChurras(newItem)} />
   </div>
 );

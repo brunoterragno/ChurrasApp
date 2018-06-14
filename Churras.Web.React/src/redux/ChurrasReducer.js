@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Map } from 'immutable';
 
 import { API_URL } from '../config';
+import { getStateWithFieldErrors, getInsertObject } from './helpers';
 
 // Default
 axios.defaults.baseURL = API_URL;
@@ -24,8 +25,8 @@ const NEW_ITEM = Map({
   title: { value: null, error: '' },
   date: { value: new Date(), error: '' },
   description: { value: null, error: '' },
-  costWithDrinks: { value: null, error: '' },
-  costWithoutDrinks: { value: null, error: '' }
+  costWithDrink: { value: null, error: '' },
+  costWithoutDrink: { value: null, error: '' }
 });
 
 const INITIAL_STATE = Map({
@@ -49,14 +50,8 @@ export default (state = INITIAL_STATE, action = {}) => {
     case CHURRAS_CREATE_SUCCESS:
       return state.set('newItem', NEW_ITEM);
     case CHURRAS_CREATE_FAIL:
-      const fieldsWithErrors = action.payload;
-      return fieldsWithErrors.reduce((prevState, error) => {
-        const field = error.field.toLowerCase();
-        return prevState.setIn(['newItem', `${field}`], {
-          [field]: '',
-          error: error.message
-        });
-      }, state);
+      return getStateWithFieldErrors(state, 'newItem', action.payload);
+
     default:
       return state;
   }
@@ -127,15 +122,4 @@ export const postChurras = churras => dispatch => {
     .post('barbecues', JSON.stringify(getInsertObject(churras)))
     .then(res => dispatch(createChurrasSuccess(res.data)))
     .catch(err => dispatch(createChurrasFail(err.response.data.errors)));
-};
-
-const getInsertObject = obj => {
-  // get all object values
-  const result = Object.keys(obj).map(p => {
-    return { [p]: obj[p].value };
-  });
-  // normalize to an object (not array)
-  const normalized = result.reduce((p, c) => ({ ...p, ...c }), {});
-  delete normalized.loading;
-  return normalized;
 };
