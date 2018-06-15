@@ -17,8 +17,7 @@ namespace Churras.Domain.Dtos
     public CreateEditParticipantDtoValidator()
     {
       RuleFor(b => b.Name)
-        .NotEmpty()
-        .NotNull();
+        .NotEmpty();
     }
   }
 }

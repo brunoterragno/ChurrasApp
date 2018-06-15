@@ -13,11 +13,18 @@ axios.defaults.headers.put['Content-Type'] = 'application/json';
 const CHURRAS_LOAD = 'churras.web.react/churras/LOAD';
 const CHURRAS_LOAD_FAIL = 'churras.web.react/churras/LOAD_FAIL';
 const CHURRAS_LOAD_SUCCESS = 'churras.web.react/churras/LOAD_SUCCESS';
+
 const CHURRAS_CREATE = 'churras.web.react/churras/CREATE';
 const CHURRAS_CREATE_SUCCESS = 'churras.web.react/churras/CREATE_SUCCESS';
 const CHURRAS_CREATE_FAIL = 'churras.web.react/churras/CREATE_FAIL';
+
 const CHURRAS_UPDATE = 'churras.web.react/churras/UPDATE';
+const CHURRAS_UPDATE_SUCCESS = 'churras.web.react/churras/UPDATE_SUCCESS';
+const CHURRAS_UPDATE_FAIL = 'churras.web.react/churras/UPDATE_FAIL';
+
 const CHURRAS_DELETE = 'churras.web.react/churras/REMOVE';
+const CHURRAS_DELETE_SUCCESS = 'churras.web.react/churras/DELETE_SUCCESS';
+const CHURRAS_DELETE_FAIL = 'churras.web.react/churras/DELETE_FAIL';
 
 // Reducer
 const NEW_ITEM = Map({
@@ -51,6 +58,22 @@ export default (state = INITIAL_STATE, action = {}) => {
       return state.set('newItem', NEW_ITEM);
     case CHURRAS_CREATE_FAIL:
       return getStateWithFieldErrors(state, 'newItem', action.payload);
+
+    case CHURRAS_UPDATE:
+      return state.setIn(['newItem', 'loading'], true);
+    case CHURRAS_UPDATE_SUCCESS:
+      return state.set('newItem', NEW_ITEM);
+    case CHURRAS_UPDATE_FAIL:
+      return getStateWithFieldErrors(state, 'newItem', action.payload);
+
+    case CHURRAS_DELETE:
+      return state.set('loading', true);
+    case CHURRAS_DELETE_SUCCESS:
+      // TODO: remove locally
+      return state.set('loading', false).set('items', []);
+    case CHURRAS_DELETE_FAIL:
+      // TODO: set error
+      return state.set('loading', false);
 
     default:
       return state;

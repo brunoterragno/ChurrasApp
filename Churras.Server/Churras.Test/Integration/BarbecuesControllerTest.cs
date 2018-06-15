@@ -134,6 +134,8 @@ namespace Churras.Test.Integration
       var response = await RequestPost<ValidationErrorResult>(client, BARBECUES, newBarbecue);
 
       // Assert
+      System.Console.WriteLine(JsonConvert.SerializeObject(response.Content));
+      System.Console.WriteLine(JsonConvert.SerializeObject(expectedValidationErrorResult));
       Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
       AssertObjectAsJSON(expectedValidationErrorResult, response.Content);
     }

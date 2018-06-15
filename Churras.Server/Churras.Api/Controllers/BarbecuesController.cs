@@ -83,9 +83,9 @@ namespace Churras.Api.Controllers
 
             barbecue.ChangeTitle(editedBarbecue.Title);
             barbecue.ChangeDescription(editedBarbecue.Description);
-            barbecue.ChangeDate(editedBarbecue.Date);
-            barbecue.ChangeCostWithDrink(editedBarbecue.CostWithDrink);
-            barbecue.ChangeCostWithoutDrink(editedBarbecue.CostWithoutDrink);
+            barbecue.ChangeDate(editedBarbecue.Date.Value);
+            barbecue.ChangeCostWithDrink(editedBarbecue.CostWithDrink.Value);
+            barbecue.ChangeCostWithoutDrink(editedBarbecue.CostWithoutDrink.Value);
 
             barbecueRepository.Save(barbecue);
 

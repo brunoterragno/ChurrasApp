@@ -8,10 +8,10 @@ namespace Churras.Domain.Dtos
   public class CreateEditBarbecueDto
   {
     public string Title { get; set; }
-    public DateTime Date { get; set; }
+    public DateTime? Date { get; set; }
     public string Description { get; set; }
-    public decimal CostWithDrink { get; set; }
-    public decimal CostWithoutDrink { get; set; }
+    public decimal? CostWithDrink { get; set; }
+    public decimal? CostWithoutDrink { get; set; }
   }
 
   public class CreateEditBarbecueDtoValidator : AbstractValidator<CreateEditBarbecueDto>
@@ -19,16 +19,13 @@ namespace Churras.Domain.Dtos
     public CreateEditBarbecueDtoValidator()
     {
       RuleFor(b => b.Title)
-        .NotEmpty()
-        .NotNull();
+        .NotEmpty();
       RuleFor(b => b.Date)
         .NotEmpty()
-        .NotNull()
         .GreaterThanOrEqualTo(DateTime.Now.Date)
         .WithMessage("'Date' must be greater than or equal to today.");
       RuleFor(b => b.CostWithDrink)
         .NotEmpty()
-        .NotNull()
         .GreaterThan(0);
     }
   }
