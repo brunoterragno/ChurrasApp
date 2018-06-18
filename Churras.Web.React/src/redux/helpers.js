@@ -5,7 +5,8 @@ export function getStateWithFieldErrors(
 ) {
   return fieldsWithErrors.reduce((prevState, error) => {
     // normalize prop name
-    const field = error.field.toLowerCase();
+    const field =
+      error.field.charAt(0).toLowerCase() + error.field.substring(1);
     // set with Immutable
     return prevState.setIn([propWithField, `${field}`], {
       [field]: '',

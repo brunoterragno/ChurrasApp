@@ -26,14 +26,16 @@ const CHURRAS_DELETE = 'churras.web.react/churras/REMOVE';
 const CHURRAS_DELETE_SUCCESS = 'churras.web.react/churras/DELETE_SUCCESS';
 const CHURRAS_DELETE_FAIL = 'churras.web.react/churras/DELETE_FAIL';
 
+const FIELD_CHANGE_VALUE = 'churras.web.react/churras/CHANGE_VALUE';
+
 // Reducer
 const NEW_ITEM = Map({
   loading: false,
-  title: { value: null, error: '' },
+  title: { value: '', error: '' },
   date: { value: new Date(), error: '' },
-  description: { value: null, error: '' },
-  costWithDrink: { value: null, error: '' },
-  costWithoutDrink: { value: null, error: '' }
+  description: { value: '', error: '' },
+  costWithDrink: { value: '', error: '' },
+  costWithoutDrink: { value: '', error: '' }
 });
 
 const INITIAL_STATE = Map({
@@ -74,6 +76,14 @@ export default (state = INITIAL_STATE, action = {}) => {
     case CHURRAS_DELETE_FAIL:
       // TODO: set error
       return state.set('loading', false);
+
+    case FIELD_CHANGE_VALUE:
+      const field = action.payload.field;
+      const value = action.payload.value;
+      return state.setIn(['newItem', `${field}`], {
+        value: value,
+        error: ''
+      });
 
     default:
       return state;
@@ -129,6 +139,13 @@ export const deleteChurras = () => dispatch => {
   });
 };
 
+export const changeValue = (field, value) => dispatch => {
+  dispatch({
+    type: FIELD_CHANGE_VALUE,
+    payload: { field, value }
+  });
+};
+
 // side effects, only as applicable
 // e.g. thunks, epics, etc
 export const getChurras = () => dispatch => {
@@ -145,4 +162,8 @@ export const postChurras = churras => dispatch => {
     .post('barbecues', JSON.stringify(getInsertObject(churras)))
     .then(res => dispatch(createChurrasSuccess(res.data)))
     .catch(err => dispatch(createChurrasFail(err.response.data.errors)));
+};
+
+export const handleChangeValue = (field, value) => dispatch => {
+  dispatch(changeValue(field, value));
 };

@@ -16,13 +16,29 @@ const Input = styled.fieldset`
   }
 `;
 
-export default ({ type, placeholder, label, errorMessage }) => (
+export default ({
+  type,
+  placeholder,
+  label,
+  value,
+  errorMessage,
+  onChangeValue
+}) => (
   <Input>
     <label>{label}</label>
     {type === 'longtext' ? (
-      <textarea placeholder={placeholder} />
+      <textarea
+        value={value}
+        placeholder={placeholder}
+        onChange={evt => onChangeValue(evt.target.value)}
+      />
     ) : (
-      <input type={type} placeholder={placeholder} />
+      <input
+        value={value}
+        type={type}
+        placeholder={placeholder}
+        onChange={evt => onChangeValue(evt.target.value)}
+      />
     )}
     {errorMessage && <span>{errorMessage}</span>}
   </Input>
