@@ -26,7 +26,8 @@ const ContainerButtons = styled.div`
 `;
 const displayItems = ({ loading, items }) => {
   if (loading) return <h1>Carregando...</h1>;
-  else if (items) return items.map(item => <Card key={item.id} {...item} />);
+  else if (items && items.length > 0)
+    return items.map(item => <Card key={item.id} {...item} />);
   else return <h1>Sem items :(</h1>;
 };
 

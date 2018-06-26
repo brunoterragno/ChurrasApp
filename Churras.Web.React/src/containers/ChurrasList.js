@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import CardList from '../components/CardList';
+import Search from '../components/Search';
 import { getChurras } from '../redux/ChurrasReducer';
 
 class ChurrasList extends Component {
@@ -8,7 +9,15 @@ class ChurrasList extends Component {
     this.props.getChurras();
   }
   render() {
-    return <CardList loading={this.props.loading} items={this.props.items} />;
+    return (
+      <Fragment>
+        <Search
+          placeholder="Escreva algo aqui"
+          onChange={val => console.log(val)}
+        />
+        <CardList loading={this.props.loading} items={this.props.items} />;
+      </Fragment>
+    );
   }
 }
 

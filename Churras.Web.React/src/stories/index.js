@@ -8,6 +8,7 @@ import PageButton from '../components/PageButton';
 import Card from '../components/Card';
 import CardList from '../components/CardList';
 import Input from '../components/Input';
+import Search from '../components/Search';
 
 storiesOf('Header', module)
   .addDecorator(story => (
@@ -99,3 +100,8 @@ storiesOf('Input', module)
       errorMessage="Você deve informar o dinheiro"
     />
   ));
+
+storiesOf('Search', module)
+  .add('without text', () => <Search />)
+  .add('with placeholder', () => <Search placeholder="Escreva algo aqui" />)
+  .add('with text', () => <Search text="Teste" />);
