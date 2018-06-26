@@ -148,10 +148,10 @@ export const changeValue = (field, value) => dispatch => {
 
 // side effects, only as applicable
 // e.g. thunks, epics, etc
-export const getChurras = () => dispatch => {
+export const getChurras = (text = '') => dispatch => {
   dispatch(loadChurras());
   axios
-    .get(`barbecues?PageNumber=1&PageSize=20`)
+    .get(`barbecues?PageNumber=1&PageSize=20&SearchTerm=${text}`)
     .then(res => dispatch(loadChurrasSuccess(res.data)))
     .catch(err => console.log(err));
 };

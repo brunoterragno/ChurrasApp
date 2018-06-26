@@ -13,7 +13,7 @@ class ChurrasList extends Component {
       <Fragment>
         <Search
           placeholder="Escreva algo aqui"
-          onChange={val => console.log(val)}
+          onChange={val => this.props.getChurras(val)}
         />
         <CardList loading={this.props.loading} items={this.props.items} />;
       </Fragment>
