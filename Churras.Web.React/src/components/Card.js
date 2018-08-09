@@ -13,10 +13,18 @@ const Card = styled.div`
   }
 `;
 
-export default ({ title, description, link }) => (
+const Buttons = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export default ({ title, description, link, onDeleteClick }) => (
   <Card>
     <h3>{title || 'Sem título'}</h3>
     <p>{description || 'Sem texto'}</p>
-    <a href={link}>Saiba mais</a>
+    <Buttons>
+      <a href={link}>Saiba mais</a>
+      <button onClick={onDeleteClick}>Excluir</button>
+    </Buttons>
   </Card>
 );
