@@ -24,16 +24,22 @@ const ContainerButtons = styled.div`
   justify-content: center;
   padding: 10px;
 `;
-const displayItems = ({ loading, items }) => {
+const displayItems = ({ loading, items, onDeleteClick }) => {
   if (loading) return <h1>Carregando...</h1>;
   else if (items && items.length > 0)
-    return items.map(item => <Card key={item.id} {...item} />);
+    return items.map(item => (
+      <Card
+        key={item.id}
+        {...item}
+        onDeleteClick={() => onDeleteClick(item.id)}
+      />
+    ));
   else return <h1>Sem items :(</h1>;
 };
 
-export default ({ loading, items }) => (
+export default ({ loading, items, onDeleteClick }) => (
   <Fragment>
-    <CardList>{displayItems({ loading, items })}</CardList>
+    <CardList>{displayItems({ loading, items, onDeleteClick })}</CardList>
     <ContainerButtons>
       <PageButton text="Anterior" />
       <PageButton text="Próximo" />

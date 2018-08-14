@@ -67,12 +67,13 @@ export default (state = INITIAL_STATE, action = {}) => {
       return state.set('newItem', NEW_ITEM);
     case CHURRAS_UPDATE_FAIL:
       return getStateWithFieldErrors(state, 'newItem', action.payload);
-
     case CHURRAS_DELETE:
       return state.set('loading', true);
     case CHURRAS_DELETE_SUCCESS:
-      // TODO: remove locally
-      return state.set('loading', false).set('items', []);
+      const items = state
+        .get('items')
+        .filter(item => item.id !== action.payload);
+      return state.set('loading', false).set('items', items);
     case CHURRAS_DELETE_FAIL:
       // TODO: set error
       return state.set('loading', false);
@@ -125,6 +126,20 @@ export const createChurrasFail = errors => dispatch => {
   });
 };
 
+export const deleteChurrasSuccess = id => dispatch => {
+  dispatch({
+    type: CHURRAS_DELETE_SUCCESS,
+    payload: id
+  });
+};
+
+export const deleteChurrasFail = errors => dispatch => {
+  dispatch({
+    type: CHURRAS_DELETE_FAIL,
+    payload: errors
+  });
+};
+
 export const updateChurras = () => dispatch => {
   dispatch({
     type: CHURRAS_UPDATE,
@@ -132,7 +147,7 @@ export const updateChurras = () => dispatch => {
   });
 };
 
-export const deleteChurras = () => dispatch => {
+export const removeChurras = () => dispatch => {
   dispatch({
     type: CHURRAS_DELETE,
     payload: null
@@ -162,6 +177,14 @@ export const postChurras = churras => dispatch => {
     .post('barbecues', JSON.stringify(getInsertObject(churras)))
     .then(res => dispatch(createChurrasSuccess(res.data)))
     .catch(err => dispatch(createChurrasFail(err.response.data.errors)));
+};
+
+export const deleteChurras = id => dispatch => {
+  dispatch(removeChurras());
+  axios
+    .delete(`barbecues/${id}`)
+    .then(() => dispatch(deleteChurrasSuccess(id)))
+    .catch(err => dispatch(deleteChurrasFail(err.response.data.errors)));
 };
 
 export const handleChangeValue = (field, value) => dispatch => {

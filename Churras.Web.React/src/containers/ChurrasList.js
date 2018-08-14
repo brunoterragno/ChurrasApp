@@ -2,12 +2,17 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import CardList from '../components/CardList';
 import Search from '../components/Search';
-import { getChurras } from '../redux/ChurrasReducer';
+import { getChurras, deleteChurras } from '../redux/ChurrasReducer';
 
 class ChurrasList extends Component {
   componentDidMount() {
     this.props.getChurras();
   }
+
+  onDeleteClick = id => {
+    this.props.deleteChurras(id);
+  };
+
   render() {
     return (
       <Fragment>
@@ -15,7 +20,12 @@ class ChurrasList extends Component {
           placeholder="Escreva algo aqui"
           onChange={val => this.props.getChurras(val)}
         />
-        <CardList loading={this.props.loading} items={this.props.items} />;
+        <CardList
+          loading={this.props.loading}
+          items={this.props.items}
+          onDeleteClick={this.onDeleteClick}
+        />
+        ;
       </Fragment>
     );
   }
@@ -28,7 +38,7 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = { getChurras };
+const mapDispatchToProps = { getChurras, deleteChurras };
 
 export default connect(
   mapStateToProps,
