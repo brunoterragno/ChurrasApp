@@ -8,17 +8,16 @@ Churras.Server
 |-- Churras.Api  
 |-- Churras.Domain  
 |-- Churras.Repository  
-`-- Churras.Test 
+`-- Churras.Test
 
 ### Build setup
 
-``` bash
+```bash
 # install dependencies
 dotnet restore
 
 # run api app
 dotnet run
-
 ```
 
 ASP.NET Core 2.0 API made with:
@@ -73,27 +72,19 @@ https://churrasapi.azurewebsites.net/swagger
 
 ### Build Setup
 
-``` bash
+```bash
 # install dependencies
-npm install
+yarn add
 
-# serve with hot reload at localhost:8080
-npm run dev
+# serve with hot reload
+yarn start
 
 # build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+yarn run build
 
 # run unit tests
-npm run unit
+yarn run test
 
 # run e2e tests
-npm run e2e
-
-# run all tests
-npm test
+yarn run cypress:open
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

@@ -1,0 +1,31 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn build
+
+PATH: 
+  /usr/local/bin:/usr/local/go/bin:/Users/brunoterragno/go:/Users/brunoterragno/Library/Android/sdk:/Users/brunoterragno/Library/Android/sdk/platform-tools:/Users/brunoterragno/.rvm/gems/ruby-2.3.3/bin:/Users/brunoterragno/.rvm/gems/ruby-2.3.3@global/bin:/Users/brunoterragno/.rvm/rubies/ruby-2.3.3/bin:/Users/brunoterragno/.rvm/bin:/Users/brunoterragno/.yarn/bin:/usr/local/bin:/usr/local/go/bin:/Users/brunoterragno/go:/Users/brunoterragno/Library/Android/sdk:/Users/brunoterragno/Library/Android/sdk/platform-tools:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:/usr/local/go/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  10.2.1
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Couldn't find a package.json file in "/Users/brunoterragno/Documents/Projects/Churras"
+      at new MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:40048:15
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:98:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:109:13
